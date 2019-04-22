@@ -10,13 +10,13 @@ namespace DVL_Sync_FileEventsLogger.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string appid = "DVL_Sync_EventLogger";
             //Windows10NotificationsHelper.TryCreateShortcut(appid);
 
             IOperationEventFactory operationEventFactory = new OperationEventFactory();
-            IFolderEventsLogger logger = new FolderEventsLoggerInWindows10Notifications(appid);
+            IFolderEventsLogger logger = new MultipleLogger(new FolderEventsLoggerInWindows10Notifications(appid), new FolderEventsLoggerInConsole());
             IFolderEventsHandler handler = new FolderEventsHandlerViaLogging(operationEventFactory, logger);
 
             var foldersConfigs = GetFolderConfigsFromPath(@"C:\DVL_Sync_FileEventsLogger\FoldersConfigs.json");

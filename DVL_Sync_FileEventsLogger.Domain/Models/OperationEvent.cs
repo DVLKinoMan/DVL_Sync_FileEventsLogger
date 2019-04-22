@@ -21,9 +21,9 @@ namespace DVL_Sync_FileEventsLogger.Domain.Models
     {
         public abstract EventType EventType { get; }
 
-        private string FileName => Path.GetFileName(FilePath);
+        public string FileName => Path.GetFileName(FilePath);
 
-        private FileType FileType  => Directory.Exists(FilePath) ? FileType.Directory : FileType.File;
+        public FileType FileType  => Directory.Exists(FilePath) ? FileType.Directory : FileType.File;
 
         public DateTime RaisedTime { get; set; }
         public string FilePath { get; set; }
