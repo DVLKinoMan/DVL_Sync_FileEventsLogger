@@ -1,16 +1,17 @@
 ﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
-using System;
-using System.IO;
 using DVL_Sync_FileEventsLogger.Domain.Models;
+using System;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
     public class FolderEventsHandlerViaLogging : IFolderEventsHandler
     {
-        private IFolderEventsLogger logger;
+        private readonly IFolderEventsLogger logger;
+        private readonly IOperationEventFactory operationEventFactory;
 
-        public FolderEventsHandlerViaLogging(IFolderEventsLogger logger)
+        public FolderEventsHandlerViaLogging(IOperationEventFactory operationEventFactory, IFolderEventsLogger logger)
         {
+            this.operationEventFactory = operationEventFactory;
             this.logger = logger;
         }
 
@@ -20,41 +21,16 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
         //    return this;
         //}
 
-        public void OnChanged(object sender, FileSystemEventArgs e) =>
-            logger.LogOperation(
-                new DefaultOperationEvent
-                {
-                    EventType = EventType.Edit,
-                    RaisedTime = DateTime.Now,
-                    FilePath = e.FullPath
-                });
+        public void OnChanged(object sender, EventArgs e) =>
+            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Edit));
 
-        public void OnCreated(object sender, FileSystemEventArgs e) =>
-            logger.LogOperation(
-                new DefaultOperationEvent
-                {
-                    EventType = EventType.Create,
-                    RaisedTime = DateTime.Now,
-                    FilePath = e.FullPath
-                });
+        public void OnCreated(object sender, EventArgs e) =>
+            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Create));
 
-        public void OnDeleted(object sender, FileSystemEventArgs e) =>
-            logger.LogOperation(
-                new DefaultOperationEvent
-                {
-                    EventType = EventType.Delete,
-                    RaisedTime = DateTime.Now,
-                    FilePath = e.FullPath
-                });
+        public void OnDeleted(object sender, EventArgs e) =>
+            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Delete));
 
-        public void OnRenamed(object sender, RenamedEventArgs e) =>
-            logger.LogOperation(
-                new RenameOperationEvent
-                {
-                    EventType = EventType.Rename,
-                    RaisedTime = DateTime.Now,
-                    FilePath = e.FullPath,
-                    OldFilePath = e.OldFullPath
-                });
+        public void OnRenamed(object sender, EventArgs e) =>
+            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Rename));
     }
 }

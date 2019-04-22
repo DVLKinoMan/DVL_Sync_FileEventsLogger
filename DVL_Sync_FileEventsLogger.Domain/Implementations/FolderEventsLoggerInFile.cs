@@ -6,7 +6,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
     public class FolderEventsLoggerInFile : IFolderEventsLogger
     {
-        private StreamWriter streamWriter;
+        private readonly StreamWriter streamWriter;
 
         public FolderEventsLoggerInFile(StreamWriter stream)
         {

@@ -1,12 +1,12 @@
-﻿using System.IO;
+﻿using System;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Abstractions
 {
     public interface IFolderEventsHandler
     {
-        void OnChanged(object sender, FileSystemEventArgs e);
-        void OnCreated(object sender, FileSystemEventArgs e);
-        void OnDeleted(object sender, FileSystemEventArgs e);
-        void OnRenamed(object sender, RenamedEventArgs e);
+        void OnChanged(object sender, EventArgs e);
+        void OnCreated(object sender, EventArgs e);
+        void OnDeleted(object sender, EventArgs e);
+        void OnRenamed(object sender, EventArgs e);
     }
 }

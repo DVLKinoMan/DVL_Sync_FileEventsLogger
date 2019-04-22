@@ -6,9 +6,9 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
     public class CustomFileSystemWatcher : IFolderWatcher
     {
-        private FileSystemWatcher watcher = new FileSystemWatcher();
-        private IFolderEventsHandler folderEventsHandler;
-        private FolderConfig folderConfig;
+        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
+        private readonly IFolderEventsHandler folderEventsHandler;
+        private readonly FolderConfig folderConfig;
 
         public CustomFileSystemWatcher(IFolderEventsHandler folderEventsHandler, FolderConfig folderConfig)
         {

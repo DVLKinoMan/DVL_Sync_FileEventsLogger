@@ -1,25 +1,14 @@
 ﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
 using DVL_Sync_FileEventsLogger.Domain.Extensions;
 using DVL_Sync_FileEventsLogger.Domain.Implementations;
-using System.ServiceProcess;
 using System.Threading;
 using static DVL_Sync_FileEventsLogger.Domain.Extensions.FolderConfigExts;
 
-namespace DVL_Sync_FileEventsLogger
+namespace DVL_Sync_FileEventsLogger.Console
 {
-    partial class EventsLoggerService : ServiceBase
+    class Program
     {
-        public EventsLoggerService()
-        {
-            InitializeComponent();
-        }
-
-        public void OnDebug()
-        {
-            OnStart(null);
-        }
-
-        protected override void OnStart(string[] args)
+        static void Main(string[] args)
         {
             IOperationEventFactory operationEventFactory = new OperationEventFactory();
             IFolderEventsLogger logger = new FolderEventsLoggerInConsole();
@@ -29,11 +18,6 @@ namespace DVL_Sync_FileEventsLogger
             var watcher = new FoldersWatcherFactoryViaFileSystemWatcher().CreateFoldersWatcher(handler, foldersConfigs);
             watcher.StartWatching();
             Thread.Sleep(Timeout.Infinite);
-        }
-
-        protected override void OnStop()
-        {
-            // TODO: Add code here to perform any tear-down necessary to stop your service.
         }
     }
 }

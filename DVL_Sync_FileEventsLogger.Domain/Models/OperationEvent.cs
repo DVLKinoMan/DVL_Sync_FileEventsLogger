@@ -17,25 +17,38 @@ namespace DVL_Sync_FileEventsLogger.Domain.Models
         Directory,
     }
 
-    public class OperationEvent
+    public abstract class OperationEvent
     {
-        public EventType EventType { get; set; }
-        protected string FileName
-        {
-            get => Path.GetFileName(FilePath);
-        }
-        protected FileType FileType
-        {
-            get => Directory.Exists(FilePath) ? FileType.Directory : FileType.File;
-        }
+        public abstract EventType EventType { get; }
+
+        private string FileName => Path.GetFileName(FilePath);
+
+        private FileType FileType  => Directory.Exists(FilePath) ? FileType.Directory : FileType.File;
+
         public DateTime RaisedTime { get; set; }
         public string FilePath { get; set; }
-         
-        public override string ToString() => $"EventType: {EventType} FileName: {FileName} FileType: {FileType} RaisedTime: {RaisedTime} FilePath: {FilePath}";
+
+        public override string ToString() =>
+            $"EventType: {EventType} FileName: {FileName} FileType: {FileType} RaisedTime: {RaisedTime} FilePath: {FilePath}";
     }
 
-    public class DefaultOperationEvent : OperationEvent
-    {
+    //public sealed class DefaultOperationEvent : OperationEvent
+    //{
 
+    //}
+
+    public sealed class CreateOperationEvent : OperationEvent
+    {
+        public override EventType EventType => EventType.Create;
+    }
+
+    public sealed class EditOperationEvent : OperationEvent
+    {
+        public override EventType EventType => EventType.Edit;
+    }
+
+    public sealed class DeleteOperationEvent : OperationEvent
+    {
+        public override EventType EventType => EventType.Delete;
     }
 }
