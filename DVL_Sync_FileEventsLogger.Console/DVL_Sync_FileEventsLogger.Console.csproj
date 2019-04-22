@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.DomainOnWindows\DVL_Sync_FileEventsLogger.DomainOnWindows.csproj" />
     <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Domain\DVL_Sync_FileEventsLogger.Domain.csproj" />
   </ItemGroup>
 
