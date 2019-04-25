@@ -1,0 +1,8 @@
+{
+  "IFolderWatcher": "Default",
+  "FoldersConfigsPath": "C:\\DVL_Sync_FileEventsLogger\\FoldersConfigs.json",
+  "IFolderEventsHandler": "Default", //Required
+  "IOperationEventFactory": "Default",
+  "IFolderEventsLogger": [ "Windows10Notifications", "Console" ],
+  "AppID": "DVL_Sync_EventLogger" //Optional (For Windows 10 Logging)
+}

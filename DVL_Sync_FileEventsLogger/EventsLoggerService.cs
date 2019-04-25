@@ -25,7 +25,7 @@ namespace DVL_Sync_FileEventsLogger
             IFolderEventsLogger logger = new FolderEventsLoggerInConsole();
             IFolderEventsHandler handler = new FolderEventsHandlerViaLogging(operationEventFactory, logger);
 
-            var foldersConfigs = GetFolderConfigsFromPath(@"C:\DVL_Sync_FileEventsLogger\FoldersConfigs.json");
+            var foldersConfigs = @"C:\DVL_Sync_FileEventsLogger\FoldersConfigs.json".GetFolderConfigs();
             var watcher = new FoldersWatcherFactoryViaFileSystemWatcher().CreateFoldersWatcher(handler, foldersConfigs);
             watcher.StartWatching();
             Thread.Sleep(Timeout.Infinite);

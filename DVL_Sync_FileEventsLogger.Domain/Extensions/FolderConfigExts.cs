@@ -8,7 +8,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
     public static class FolderConfigExts
     {
 
-        public static FolderConfig GetFolderConfigFromPath(string path)
+        public static FolderConfig GetFolderConfig(this string path)
         {
             using (StreamReader r = new StreamReader(path))
             {
@@ -17,7 +17,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
             }
         }
 
-        public static IEnumerable<FolderConfig> GetFolderConfigsFromPath(string path)
+        public static IEnumerable<FolderConfig> GetFolderConfigs(this string path)
         {
             using (StreamReader r = new StreamReader(path))
             {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
-    public class FoldersWatcherFactoryViaFileSystemWatcher : IFoldersWatcherFactory
+    public sealed class FoldersWatcherFactoryViaFileSystemWatcher : IFoldersWatcherFactory
     {
         public IEnumerable<IFolderWatcher> CreateFoldersWatcher(IFolderEventsHandler folderEventsHandler,
             IEnumerable<FolderConfig> foldersConfigs)
