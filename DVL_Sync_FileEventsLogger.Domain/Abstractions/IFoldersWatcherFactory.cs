@@ -5,6 +5,6 @@ namespace DVL_Sync_FileEventsLogger.Domain.Abstractions
 {
     public interface IFoldersWatcherFactory
     {
-        IEnumerable<IFolderWatcher> CreateFoldersWatcher(IFolderEventsHandler folderEventsHandler, IEnumerable<FolderConfig> foldersConfigs);
+        IEnumerable<IFolderWatcher> CreateFoldersWatcher(IEnumerable<IFolderEventsHandler> folderEventsHandler, IEnumerable<FolderConfig> foldersConfigs);
     }
 }

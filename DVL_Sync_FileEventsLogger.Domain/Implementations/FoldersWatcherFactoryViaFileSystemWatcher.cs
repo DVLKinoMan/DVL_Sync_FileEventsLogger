@@ -6,18 +6,18 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
     public sealed class FoldersWatcherFactoryViaFileSystemWatcher : IFoldersWatcherFactory
     {
-        public IEnumerable<IFolderWatcher> CreateFoldersWatcher(IFolderEventsHandler folderEventsHandler,
+        public IEnumerable<IFolderWatcher> CreateFoldersWatcher(IEnumerable<IFolderEventsHandler> folderEventsHandlers,
             IEnumerable<FolderConfig> foldersConfigs)
         {
-            var watchers = new List<IFolderWatcher>();
-            foreach (var folderConfig in foldersConfigs)
+            var handlerIterator = folderEventsHandlers.GetEnumerator();
+            var configIterator = foldersConfigs.GetEnumerator();
+
+            while (handlerIterator.MoveNext() && configIterator.MoveNext())
             {
                 IFolderWatcherFactory
                     watcherFactory = new FolderWatcherFactoryViaFileSystemWatcher();
-                watchers.Add(watcherFactory.CreateFolderWatcher(folderEventsHandler, folderConfig));
+                yield return watcherFactory.CreateFolderWatcher(handlerIterator.Current, configIterator.Current);
             }
-
-            return watchers;
         }
     }
 }

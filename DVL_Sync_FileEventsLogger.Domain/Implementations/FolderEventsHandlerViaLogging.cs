@@ -15,7 +15,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
             this.logger = logger;
         }
 
-        //public IFolderEventsHandler WithFolderEventsLogger(IFolderEventsLogger logger)
+        //public IFolderEventsHandler WithFolderEventsLogger(LoggerTypes logger)
         //{
         //    this.logger = logger;
         //    return this;

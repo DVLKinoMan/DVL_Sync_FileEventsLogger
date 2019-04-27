@@ -1,9 +1,6 @@
-﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
-using DVL_Sync_FileEventsLogger.Domain.Extensions;
-using DVL_Sync_FileEventsLogger.Domain.Implementations;
+﻿using DVL_Sync_FileEventsLogger.Domain.Extensions;
 using System.ServiceProcess;
 using System.Threading;
-using static DVL_Sync_FileEventsLogger.Domain.Extensions.FolderConfigExts;
 
 namespace DVL_Sync_FileEventsLogger
 {
@@ -21,13 +18,12 @@ namespace DVL_Sync_FileEventsLogger
 
         protected override void OnStart(string[] args)
         {
-            IOperationEventFactory operationEventFactory = new OperationEventFactory();
-            IFolderEventsLogger logger = new FolderEventsLoggerInConsole();
-            IFolderEventsHandler handler = new FolderEventsHandlerViaLogging(operationEventFactory, logger);
+            string configName = "config.json";
 
-            var foldersConfigs = @"C:\DVL_Sync_FileEventsLogger\FoldersConfigs.json".GetFolderConfigs();
-            var watcher = new FoldersWatcherFactoryViaFileSystemWatcher().CreateFoldersWatcher(handler, foldersConfigs);
+            var watcher =
+                $"{System.Environment.CurrentDirectory}/{configName}".GetFoldersWatcherConfig().GetFolderWatchers();
             watcher.StartWatching();
+
             Thread.Sleep(Timeout.Infinite);
         }
 

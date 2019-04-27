@@ -1,4 +1,5 @@
-﻿using SystemNotifyFilters = System.IO.NotifyFilters;
+﻿using System.Collections.Generic;
+using SystemNotifyFilters = System.IO.NotifyFilters;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Models
 {
@@ -10,5 +11,11 @@ namespace DVL_Sync_FileEventsLogger.Domain.Models
                                                             | SystemNotifyFilters.LastWrite
                                                             | SystemNotifyFilters.FileName
                                                             | SystemNotifyFilters.DirectoryName;
+        public bool WatchLogFiles { get; set; } = false;
+        public bool WatchHiddenFiles { get; set; } = false;
+        /// <summary>
+        /// File Paths, which Events would not be Handled
+        /// </summary>
+        public IEnumerable<string> FilteredFiles { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
+using DVL_Sync_FileEventsLogger.Domain.Implementations;
 using DVL_Sync_FileEventsLogger.Domain.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using DVL_Sync_FileEventsLogger.Domain.Abstractions;
-using DVL_Sync_FileEventsLogger.Domain.Implementations;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Extensions
 {
@@ -38,20 +38,21 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
                                 case "Default":
                                     IOperationEventFactory operationEventFactory = new OperationEventFactory();
 
-                                    if (config.IFolderEventsLogger == null || config.IFolderEventsLogger.Length == 0)
-                                        throw new ArgumentException("config.IFolderEventsLogger");
+                                    if (config.LoggerTypes == null || config.LoggerTypes.Length == 0)
+                                        throw new ArgumentException("config.LoggerTypes");
 
+                                    IFolderEventsLoggerFactory folderEventsLoggerFactory =
+                                        new FolderEventsLoggerFactory();
 
-                                    IFolderEventsLogger logger =
-                                        new MultipleFolderEventsLogger(config.IFolderEventsLogger
-                                            .GetFolderEventsLoggers().ToArray());
+                                    IEnumerable<IFolderEventsHandler> folderEventsHandlers =
+                                        foldersConfigs.GetFolderEventsHandlers(config.LoggerTypes,
+                                            folderEventsLoggerFactory, operationEventFactory);
 
-                                    IFolderEventsHandler handler =
-                                        new FolderEventsHandlerViaLogging(operationEventFactory, logger);
+                                    IFoldersWatcherFactory foldersWatcherFactory = new
+                                        FoldersWatcherFactoryViaFileSystemWatcher();
 
-                                    return
-                                        new FoldersWatcherFactoryViaFileSystemWatcher().CreateFoldersWatcher(handler,
-                                            foldersConfigs);
+                                    return foldersWatcherFactory.CreateFoldersWatcher(folderEventsHandlers,
+                                        foldersConfigs);
                                 default:
                                     throw new ArgumentException("config.IOperationEventFactory");
                             }
@@ -71,23 +72,30 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
 
         //}
 
-        public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this string[] foldereventsLoggers)
+        public static IEnumerable<IFolderEventsHandler> GetFolderEventsHandlers(
+            this IEnumerable<FolderConfig> foldersConfigs, LoggerType[] loggerTypes,
+            IFolderEventsLoggerFactory folderEventsLoggerFactory, IOperationEventFactory operationEventFactory)
         {
-            foreach (var loggerString in foldereventsLoggers)
-                yield return loggerString.GetFolderEventsLogger();
-        }
-
-        public static IFolderEventsLogger GetFolderEventsLogger(this string logger)
-        {
-            switch (logger)
+            foreach (var folderConfig in foldersConfigs)
             {
-                case "Console":
-                    return new FolderEventsLoggerInConsole();
-                case "File":
-                    return new FolderEventsLoggerInFile(new StreamWriter("LogFile.txt"));
-                default:
-                    throw new ArgumentException("logger");
+                IFolderEventsLogger logger =
+                    new MultipleFolderEventsLogger(loggerTypes
+                        .GetFolderEventsLoggers(folderEventsLoggerFactory, folderConfig)
+                        .ToArray());
+
+                IFolderEventsHandler folderEventsHandler =
+                    new FolderEventsHandlerViaLogging(operationEventFactory, logger);
+
+                yield return folderEventsHandler;
             }
         }
+
+        public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
+            IFolderEventsLoggerFactory folderEventsLoggerFactory, FolderConfig folderConfig)
+        {
+            foreach (var loggerString in loggerTypes)
+                yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
+        }
+
     }
 }

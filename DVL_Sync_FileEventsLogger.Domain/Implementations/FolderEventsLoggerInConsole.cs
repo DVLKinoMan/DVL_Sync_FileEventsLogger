@@ -1,13 +1,21 @@
 ﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
 using DVL_Sync_FileEventsLogger.Domain.Models;
 using System;
+using DVL_Sync_FileEventsLogger.Domain.Extensions;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 {
     public class FolderEventsLoggerInConsole : IFolderEventsLogger
     {
-        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent =>
-            Console.WriteLine(operation);
+        private readonly FolderConfig folderConfig;
+
+        public FolderEventsLoggerInConsole(FolderConfig folderConfig) => this.folderConfig = folderConfig;
+
+        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
+        {
+            if (folderConfig.IsValid(operation))
+                Console.WriteLine(operation);
+        }
 
         //{
         //    switch (operation)

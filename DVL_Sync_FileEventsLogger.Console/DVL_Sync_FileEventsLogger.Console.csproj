@@ -10,4 +10,10 @@
     <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Domain\DVL_Sync_FileEventsLogger.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
