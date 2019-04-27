@@ -17,11 +17,21 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
                 case LoggerType.Console:
                     return new FolderEventsLoggerInConsole(folderConfig);
                 case LoggerType.TextFile:
-                    return new FolderEventsLoggerInFile(
-                        new StreamWriter($"{folderConfig.FolderPath}/{Constants.TextLogFileName}", true), folderConfig);
+
+                    var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
+                    var stream = new StreamWriter(fullPath, true);
+                    var flInfo = new FileInfo(fullPath);
+                    flInfo.Attributes = flInfo.Attributes | FileAttributes.Hidden;
+
+                    return new FolderEventsLoggerInFile(stream, folderConfig);
                 case LoggerType.JsonFile:
-                    return new FolderEventsLoggerInJsonFile(
-                        new StreamWriter($"{folderConfig.FolderPath}/{Constants.JsonLogFileName}", true), folderConfig);
+
+                    var fullPath2 = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
+                    var stream2 = new StreamWriter(fullPath2, true);
+                    var flInfo2 = new FileInfo(fullPath2);
+                    flInfo2.Attributes = flInfo2.Attributes | FileAttributes.Hidden;
+
+                    return new FolderEventsLoggerInJsonFile(stream2, folderConfig);
                 default:
                     throw new ArgumentException("loggerType");
             }
