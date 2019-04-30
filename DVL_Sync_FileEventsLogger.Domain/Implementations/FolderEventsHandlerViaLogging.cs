@@ -1,5 +1,5 @@
 ﻿using DVL_Sync_FileEventsLogger.Domain.Abstractions;
-using DVL_Sync_FileEventsLogger.Domain.Models;
+//using DVL_Sync_FileEventsLogger.Domain.Models;
 using System;
 
 namespace DVL_Sync_FileEventsLogger.Domain.Implementations
@@ -22,15 +22,15 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
         //}
 
         public void OnChanged(object sender, EventArgs e) =>
-            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Edit));
+            logger.LogOperation(operationEventFactory.GetEditOperationEvent(e));
 
         public void OnCreated(object sender, EventArgs e) =>
-            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Create));
+            logger.LogOperation(operationEventFactory.GetCreateOperationEvent(e));
 
         public void OnDeleted(object sender, EventArgs e) =>
-            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Delete));
+            logger.LogOperation(operationEventFactory.GetDeleteOperationEvent(e));
 
         public void OnRenamed(object sender, EventArgs e) =>
-            logger.LogOperation(operationEventFactory.CreateOperationEvent(e,EventType.Rename));
+            logger.LogOperation(operationEventFactory.GetRenameOperationEvent(e));
     }
 }

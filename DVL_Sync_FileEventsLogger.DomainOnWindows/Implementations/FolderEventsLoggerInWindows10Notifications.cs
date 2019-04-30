@@ -18,6 +18,11 @@ namespace DVL_Sync_FileEventsLogger.DomainOnWindows.Implementations
             Windows10NotificationsHelper.TryCreateShortcut(applicationID);
         }
 
+        public void Dispose()
+        {
+            
+        }
+
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
             //This is not responsibility of this operation. It needs abstraction

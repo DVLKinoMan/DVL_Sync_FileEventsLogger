@@ -36,7 +36,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
                             switch (config.IOperationEventFactory)
                             {
                                 case "Default":
-                                    IOperationEventFactory operationEventFactory = new OperationEventFactory();
+                                    IOperationEventFactory operationEventFactory = new FileSystemOperationEventFactory();
 
                                     if (config.LoggerTypes == null || config.LoggerTypes.Length == 0)
                                         throw new ArgumentException("config.LoggerTypes");
@@ -72,7 +72,7 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
 
         //}
 
-        public static IEnumerable<IFolderEventsHandler> GetFolderEventsHandlers(
+        private static IEnumerable<IFolderEventsHandler> GetFolderEventsHandlers(
             this IEnumerable<FolderConfig> foldersConfigs, LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, IOperationEventFactory operationEventFactory)
         {
@@ -90,11 +90,30 @@ namespace DVL_Sync_FileEventsLogger.Domain.Extensions
             }
         }
 
-        public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
+        private static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, FolderConfig folderConfig)
         {
-            foreach (var loggerString in loggerTypes)
-                yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
+            foreach (var loggerType in loggerTypes)
+            {
+                if (folderConfig != null && !Directory.Exists(folderConfig.FolderPath))
+                    throw new DirectoryNotFoundException($"Directory on Path {folderConfig.FolderPath} Not Found");
+
+                switch (loggerType)
+                {
+                    case LoggerType.Console:
+                        yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
+                        break;
+                    case LoggerType.TextFile:
+                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig);
+                        break;
+                    case LoggerType.JsonFile:
+                        yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig);
+                        break;
+                    default:
+                        throw new ArgumentException("loggerType");
+                }
+            }
+            //yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
         }
 
     }

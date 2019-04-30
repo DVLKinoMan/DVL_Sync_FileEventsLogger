@@ -11,6 +11,11 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 
         public FolderEventsLoggerInConsole(FolderConfig folderConfig) => this.folderConfig = folderConfig;
 
+        public void Dispose()
+        { 
+
+        }
+
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
             if (folderConfig.IsValid(operation))

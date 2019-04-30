@@ -9,6 +9,12 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
 
         public MultipleFolderEventsLogger(params IFolderEventsLogger[] loggers) => this.loggers = loggers;
 
+        public void Dispose()
+        {
+            foreach (var logger in loggers)
+                logger.Dispose();
+        }
+
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
             foreach (var logger in loggers)

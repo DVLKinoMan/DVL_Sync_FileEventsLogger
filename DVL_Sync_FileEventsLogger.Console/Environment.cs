@@ -8,7 +8,7 @@
 //    {
 //        public static readonly string appid = "DVL_Sync_EventLogger";
 
-//        public static readonly IOperationEventFactory operationEventFactory = new OperationEventFactory();
+//        public static readonly IOperationEventFactory operationEventFactory = new FileSystemOperationEventFactory();
 
 //        public static readonly IFolderEventsLogger logger =
 //            new MultipleFolderEventsLogger(new FolderEventsLoggerInWindows10Notifications(appid),

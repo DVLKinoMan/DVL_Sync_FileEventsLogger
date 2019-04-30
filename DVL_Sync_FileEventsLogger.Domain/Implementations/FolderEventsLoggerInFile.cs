@@ -10,12 +10,14 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
         private readonly StreamWriter streamWriter;
         private readonly FolderConfig folderConfig;
 
-        public FolderEventsLoggerInFile(StreamWriter stream, FolderConfig folderConfig)
+        public FolderEventsLoggerInFile(FolderConfig folderConfig)
         {
-            this.streamWriter = stream;
-            this.streamWriter.AutoFlush = true;
+            var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
+            this.streamWriter = new StreamWriter(fullPath, true).SetAttributeToHidden().SetAutoFlush();
             this.folderConfig = folderConfig;
         }
+
+        public void Dispose() => streamWriter.Dispose();
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {

@@ -11,12 +11,15 @@ namespace DVL_Sync_FileEventsLogger.Domain.Implementations
         private readonly StreamWriter streamWriter;
         private readonly FolderConfig folderConfig;
 
-        public FolderEventsLoggerInJsonFile(StreamWriter stream, FolderConfig folderConfig)
+        public FolderEventsLoggerInJsonFile(FolderConfig folderConfig)
         {
-            streamWriter = stream;
-            streamWriter.AutoFlush = true;
+
+            var fullPath = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
+            this.streamWriter = new StreamWriter(fullPath, true).SetAttributeToHidden().SetAutoFlush();
             this.folderConfig = folderConfig;
         }
+
+        public void Dispose() => streamWriter.Dispose();
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
