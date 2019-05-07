@@ -5,11 +5,19 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVL_Sync_FileEventsLogger", "DVL_Sync_FileEventsLogger\DVL_Sync_FileEventsLogger.csproj", "{29089D12-6B0A-44C4-8997-1929ED1A4B17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Domain", "DVL_Sync_FileEventsLogger.Domain\DVL_Sync_FileEventsLogger.Domain.csproj", "{EA77958F-BB94-4BCF-9127-6BA178BB14F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Abstractions", "DVL_Sync_FileEventsLogger.Abstractions\DVL_Sync_FileEventsLogger.Abstractions.csproj", "{2E061CF5-9934-4F73-86E6-44575396A56D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Console", "DVL_Sync_FileEventsLogger.Console\DVL_Sync_FileEventsLogger.Console.csproj", "{0FA218BD-F0B9-42C8-9211-733CB1064797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Implementations", "DVL_Sync_FileEventsLogger.Implementations\DVL_Sync_FileEventsLogger.Implementations.csproj", "{2427ADA5-1A43-4D83-866B-DE36EE58AB5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVL_Sync_FileEventsLogger.DomainOnWindows", "DVL_Sync_FileEventsLogger.DomainOnWindows\DVL_Sync_FileEventsLogger.DomainOnWindows.csproj", "{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVL_Sync_FileEventsLogger.OnWindows", "DVL_Sync_FileEventsLogger.OnWindows\DVL_Sync_FileEventsLogger.OnWindows.csproj", "{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Console", "DVL_Sync_FileEventsLogger.Console\DVL_Sync_FileEventsLogger.Console.csproj", "{80FAE7CF-1B7A-4EE8-9E65-EFE40893D6F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Extensions", "DVL_Sync_FileEventsLogger.Extensions\DVL_Sync_FileEventsLogger.Extensions.csproj", "{3FC82ACD-D3B8-440D-BD2A-F2172B9DDD0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DVL_Sync_FileEventsLogger.Models", "DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj", "{90DAE338-AA89-41EE-AA52-DF37EE93403D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Extensions", "System.Extensions\System.Extensions.csproj", "{6129D2B2-E064-47AC-82D8-2428C9BE6A33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +29,34 @@ Global
 		{29089D12-6B0A-44C4-8997-1929ED1A4B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29089D12-6B0A-44C4-8997-1929ED1A4B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29089D12-6B0A-44C4-8997-1929ED1A4B17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA77958F-BB94-4BCF-9127-6BA178BB14F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA77958F-BB94-4BCF-9127-6BA178BB14F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA77958F-BB94-4BCF-9127-6BA178BB14F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA77958F-BB94-4BCF-9127-6BA178BB14F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FA218BD-F0B9-42C8-9211-733CB1064797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FA218BD-F0B9-42C8-9211-733CB1064797}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FA218BD-F0B9-42C8-9211-733CB1064797}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FA218BD-F0B9-42C8-9211-733CB1064797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E061CF5-9934-4F73-86E6-44575396A56D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E061CF5-9934-4F73-86E6-44575396A56D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E061CF5-9934-4F73-86E6-44575396A56D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E061CF5-9934-4F73-86E6-44575396A56D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2427ADA5-1A43-4D83-866B-DE36EE58AB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2427ADA5-1A43-4D83-866B-DE36EE58AB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2427ADA5-1A43-4D83-866B-DE36EE58AB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2427ADA5-1A43-4D83-866B-DE36EE58AB5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE2A4C4-3FA9-426D-B4C6-06AA9CA6B4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FAE7CF-1B7A-4EE8-9E65-EFE40893D6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FAE7CF-1B7A-4EE8-9E65-EFE40893D6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FAE7CF-1B7A-4EE8-9E65-EFE40893D6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FAE7CF-1B7A-4EE8-9E65-EFE40893D6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC82ACD-D3B8-440D-BD2A-F2172B9DDD0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC82ACD-D3B8-440D-BD2A-F2172B9DDD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC82ACD-D3B8-440D-BD2A-F2172B9DDD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC82ACD-D3B8-440D-BD2A-F2172B9DDD0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90DAE338-AA89-41EE-AA52-DF37EE93403D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90DAE338-AA89-41EE-AA52-DF37EE93403D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90DAE338-AA89-41EE-AA52-DF37EE93403D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90DAE338-AA89-41EE-AA52-DF37EE93403D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6129D2B2-E064-47AC-82D8-2428C9BE6A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6129D2B2-E064-47AC-82D8-2428C9BE6A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6129D2B2-E064-47AC-82D8-2428C9BE6A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6129D2B2-E064-47AC-82D8-2428C9BE6A33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

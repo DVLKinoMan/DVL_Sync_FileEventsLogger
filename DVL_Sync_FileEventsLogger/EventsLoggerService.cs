@@ -1,4 +1,4 @@
-﻿using DVL_Sync_FileEventsLogger.Domain.Extensions;
+﻿using DVL_Sync_FileEventsLogger.Extensions;
 using System.ServiceProcess;
 using System.Threading;
 
@@ -6,15 +6,9 @@ namespace DVL_Sync_FileEventsLogger
 {
     partial class EventsLoggerService : ServiceBase
     {
-        public EventsLoggerService()
-        {
-            InitializeComponent();
-        }
+        public EventsLoggerService() => InitializeComponent();
 
-        public void OnDebug()
-        {
-            OnStart(null);
-        }
+        public void OnDebug() => OnStart(null);
 
         protected override void OnStart(string[] args)
         {

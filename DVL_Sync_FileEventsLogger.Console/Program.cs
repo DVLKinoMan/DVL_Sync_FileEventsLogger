@@ -1,4 +1,4 @@
-﻿using DVL_Sync_FileEventsLogger.Domain.Extensions;
+﻿using DVL_Sync_FileEventsLogger.Extensions;
 //using DVL_Sync_FileEventsLogger.DomainOnWindows.Helpers;
 using System.Threading;
 

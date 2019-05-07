@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj" />
+  </ItemGroup>
+
+</Project>

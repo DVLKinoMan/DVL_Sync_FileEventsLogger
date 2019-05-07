@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Abstractions\DVL_Sync_FileEventsLogger.Abstractions.csproj" />
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj" />
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.OnWindows\DVL_Sync_FileEventsLogger.OnWindows.csproj" />
+  </ItemGroup>
+
+</Project>

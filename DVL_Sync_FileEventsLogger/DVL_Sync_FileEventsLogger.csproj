@@ -60,11 +60,18 @@
     </None>
     <None Include="FoldersConfigs.json" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Domain\DVL_Sync_FileEventsLogger.Domain.csproj">
-      <Project>{ea77958f-bb94-4bcf-9127-6ba178bb14f8}</Project>
-      <Name>DVL_Sync_FileEventsLogger.Domain</Name>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Abstractions\DVL_Sync_FileEventsLogger.Abstractions.csproj">
+      <Project>{2e061cf5-9934-4f73-86e6-44575396a56d}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Extensions\DVL_Sync_FileEventsLogger.Extensions.csproj">
+      <Project>{3fc82acd-d3b8-440d-bd2a-f2172b9ddd0b}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj">
+      <Project>{90dae338-aa89-41ee-aa52-df37ee93403d}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
