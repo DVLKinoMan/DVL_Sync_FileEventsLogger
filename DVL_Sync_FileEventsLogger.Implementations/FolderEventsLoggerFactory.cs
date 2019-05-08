@@ -3,6 +3,7 @@
 //using System.IO;
 using DVL_Sync_FileEventsLogger.OnWindows.Implementations;
 using DVL_Sync_FileEventsLogger.Models;
+using System.IO;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
@@ -41,8 +42,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         public IFolderEventsLogger CreateLoggerInConsole(FolderConfig folderConfig) =>
             new FolderEventsLoggerInConsole(folderConfig);
 
-        public IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig) =>
-            new FolderEventsLoggerInFile(folderConfig);
+        public IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, StreamWriter streamWriter) =>
+            new FolderEventsLoggerInFile(folderConfig, streamWriter);
         //{
         //    var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
         //    var stream = new StreamWriter(fullPath, true);

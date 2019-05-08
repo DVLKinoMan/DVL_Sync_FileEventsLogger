@@ -6,6 +6,7 @@ using System.Linq;
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Implementations;
 using DVL_Sync_FileEventsLogger.Models;
+using System.Extensions;
 
 namespace DVL_Sync_FileEventsLogger.Extensions
 {
@@ -104,14 +105,17 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                         yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
                         break;
                     case LoggerType.TextFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig);
+                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
+                            new StreamWriter($"{folderConfig.FolderPath}/{Constants.TextLogFileName}", true)
+                                .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.JsonFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig);
                         break;
                     case LoggerType.Windows10Notification:
-                        yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig, Constants
-                            .ApplicationIDForWindows10);
+                        yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,
+                            Constants
+                                .ApplicationIDForWindows10);
                         break;
                     default:
                         throw new ArgumentException("loggerType");
