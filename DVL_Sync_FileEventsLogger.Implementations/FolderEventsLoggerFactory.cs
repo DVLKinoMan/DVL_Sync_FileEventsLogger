@@ -53,8 +53,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         //    return new FolderEventsLoggerInFile(stream, folderConfig);
         //}
 
-        public IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig) =>
-            new FolderEventsLoggerInJsonFile(folderConfig);
+        public IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, StreamWriter streamWriter) =>
+            new FolderEventsLoggerInJsonFile(folderConfig, streamWriter);
         //{
         //    var fullPath2 = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
         //    var stream2 = new StreamWriter(fullPath2, true);

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 //using DVL_Sync_FileEventsLogger.Domain.Extensions;
 using Newtonsoft.Json;
-using System.Extensions;
+//using System.Extensions;
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
 
@@ -12,11 +12,11 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         private readonly StreamWriter streamWriter;
         private readonly FolderConfig folderConfig;
 
-        public FolderEventsLoggerInJsonFile(FolderConfig folderConfig)
+        public FolderEventsLoggerInJsonFile(FolderConfig folderConfig, StreamWriter streamWriter)
         {
 
-            var fullPath = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
-            this.streamWriter = new StreamWriter(fullPath, true).SetAttributeToHidden().SetAutoFlush();
+            //var fullPath = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
+            this.streamWriter = streamWriter;
             this.folderConfig = folderConfig;
         }
 

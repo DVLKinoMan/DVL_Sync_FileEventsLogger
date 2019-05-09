@@ -10,7 +10,7 @@ namespace DVL_Sync_FileEventsLogger.Abstractions
         //IFolderEventsLogger CreateFolderEventsLogger(LoggerType loggerType, FolderConfig folderConfig);
         IFolderEventsLogger CreateLoggerInConsole(FolderConfig folderConfig);
         IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, StreamWriter streamWriter);
-        IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig);
+        IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, StreamWriter streamWriter);
         IFolderEventsLogger CreateLoggerAsWindows10Notification(FolderConfig folderConfig, string appid);
     }
 }

@@ -110,7 +110,9 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                                 .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.JsonFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig);
+                        yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
+                            new StreamWriter($"{folderConfig.FolderPath}/{Constants.JsonLogFileName}", true)
+                                .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.Windows10Notification:
                         yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,
