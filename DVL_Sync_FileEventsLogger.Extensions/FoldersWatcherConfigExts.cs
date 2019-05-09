@@ -106,12 +106,16 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                         break;
                     case LoggerType.TextFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
-                            new StreamWriter($"{folderConfig.FolderPath}/{Constants.TextLogFileName}", true)
+                            new StreamWriter(
+                                    $"{folderConfig.FolderPath}/{DateTime.Now.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"))} - {Constants.TextLogFileName}",
+                                    true)
                                 .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.JsonFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
-                            new StreamWriter($"{folderConfig.FolderPath}/{Constants.JsonLogFileName}", true)
+                            new StreamWriter(
+                                    $"{folderConfig.FolderPath}/{DateTime.Now.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"))} - {Constants.JsonLogFileName}",
+                                    true)
                                 .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.Windows10Notification:
@@ -123,6 +127,7 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                         throw new ArgumentException("loggerType");
                 }
             }
+
             //yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
         }
 

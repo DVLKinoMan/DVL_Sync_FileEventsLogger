@@ -1,4 +1,6 @@
-﻿using DVL_Sync_FileEventsLogger.Extensions;
+﻿using System.Extensions;
+using DVL_Sync_FileEventsLogger.Extensions;
+using System.Reflection;
 using System.ServiceProcess;
 using System.Threading;
 
@@ -15,7 +17,7 @@ namespace DVL_Sync_FileEventsLogger
             string configName = "config.json";
 
             var watcher =
-                $"{System.Environment.CurrentDirectory}/{configName}".GetFoldersWatcherConfig().GetFolderWatchers();
+                $"{Assembly.GetAssembly(typeof(ProjectInstaller)).Location.GetDirectoryPath()}/{configName}".GetFoldersWatcherConfig().GetFolderWatchers();
             watcher.StartWatching();
 
             Thread.Sleep(Timeout.Infinite);

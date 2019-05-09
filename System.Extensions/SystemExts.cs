@@ -21,5 +21,25 @@ namespace System.Extensions
         public static string FullPath(this StreamWriter streamWriter) => ((FileStream) streamWriter.BaseStream).Name;
 
         public static bool IsNullOrEmpty(this string str) => string.IsNullOrEmpty(str);
+
+        public static string Format(this DateTime dateTime, string format, params (string,string)[] withReplacedValues)
+        {
+            string result = dateTime.ToString(format);
+
+            foreach (var replacedValue in withReplacedValues)
+                result = result.Replace(replacedValue.Item1, replacedValue.Item2);
+
+            return result;
+        }
+
+        public static string GetDirectoryPath(this string fullPath)
+        {
+            int len = Path.GetFileName(fullPath).Length;
+            if (len == 0)
+                return fullPath;
+
+            return fullPath.Remove(fullPath.Length - len, len);
+        }
+
     }
 }

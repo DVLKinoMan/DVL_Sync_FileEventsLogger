@@ -3,6 +3,6 @@
   "FoldersConfigsPath": "C:\\DVL_Sync_FileEventsLogger\\FoldersConfigs.json",
   "IFolderEventsHandler": "Default", //Required
   "IOperationEventFactory": "Default",
-  "LoggerTypes": [ "TextFile", "Console", "JsonFile" ], // Can Use: TextFile, Console, JsonFile
+  "LoggerTypes": [ "TextFile", "Console", "JsonFile", "Windows10Notification" ], // Can Use: TextFile, Console, JsonFile, Windows10Notification
   "AppID": "DVL_Sync_EventLogger" //Optional (For Windows 10 Logging)
 }
