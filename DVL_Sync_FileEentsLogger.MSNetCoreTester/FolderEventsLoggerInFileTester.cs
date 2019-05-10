@@ -11,33 +11,80 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
     [TestClass]
     public class FolderEventsLoggerInFileTester
     {
-        private readonly FolderConfig folderConfig;
+        //private readonly FolderConfig folderConfig;
         //private readonly FolderEventsLoggerInFile folderEventsLoggerInFile;
 
-        public FolderEventsLoggerInFileTester() => this.folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
+        //public FolderEventsLoggerInFileTester() => this.folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
         //this.folderEventsLoggerInFile = new FolderEventsLoggerInFile(this.folderConfig, streamWriter);
 
         //private Stream CreateFileStream() => new FileStream($"{folderConfig.FolderPath}/{Constants.TextLogFileName}",
         //    FileMode.OpenOrCreate);
 
         private StreamWriter CreateStreamWriter(MemoryStream stream) =>
-            SetAttributeHiddenAndAutoflush(new StreamWriter(stream));
+            SetAttributeToAutoflush(new StreamWriter(stream));
 
-        private StreamWriter SetAttributeHiddenAndAutoflush(StreamWriter streamWriter) =>
-            streamWriter.SetAttributeToHidden().SetAutoFlush();
+        private StreamWriter SetAttributeToAutoflush(StreamWriter streamWriter) =>
+            streamWriter.SetAutoFlush();
 
         [TestMethod]
         public void CreateOperationEventLoggedCorrectly()
         {
-            using(var stream = new MemoryStream())
-            using (var eventsLogger = new FolderEventsLoggerInFile(this.folderConfig, CreateStreamWriter(stream)))
-            {
-                var createOp = new CreateOperationEvent()
-                    {FilePath = "D:\\David\\txtFile", RaisedTime = DateTime.Today};
-                eventsLogger.LogOperation(createOp);
+            var createOp = new CreateOperationEvent()
+                { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+            var folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
 
-                string actual = Encoding.UTF8.GetString(stream.ToArray());
-                Assert.AreEqual(createOp, actual);
+            OperationEventLoggedCorrectly(createOp, folderConfig);
+        }
+
+        [TestMethod]
+        public void EditOperationEventLoggedCorrectly()
+        {
+                var editOp = new EditOperationEvent()
+                    { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+                var folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
+
+                OperationEventLoggedCorrectly(editOp, folderConfig);
+        }
+
+        [TestMethod]
+        public void DeleteOperationEventLoggedCorrectly()
+        {
+                var delOp = new DeleteOperationEvent()
+                    { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+                var folderConfig = new FolderConfig {FolderPath = "D:\\DVL_Sync_WatcherTestingFile2"};
+
+                OperationEventLoggedCorrectly(delOp, folderConfig);
+        }
+
+        [TestMethod]
+        public void RenameOperationEventLoggedCorrectly()
+        {
+            var renameOp = new RenameOperationEvent()
+            {
+                FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today,
+                OldFilePath = "D:\\SomeInValidPath"
+            };
+            var folderConfig = new FolderConfig {FolderPath = "D:\\DVL_Sync_WatcherTestingFile2"};
+
+            OperationEventLoggedCorrectly(renameOp, folderConfig);
+        }
+
+        private void OperationEventLoggedCorrectly(OperationEvent opEvent, FolderConfig folderConfig)
+        {
+            using (var stream = new MemoryStream())
+            using (var eventsLogger = new FolderEventsLoggerInFile(folderConfig, CreateStreamWriter(stream)))
+            {
+                eventsLogger.LogOperation(opEvent);
+
+                //Check if two equals
+                string actual = Encoding.Default.GetString(stream.ToArray());
+
+                if (folderConfig.IsValid(opEvent, Constants.TextLogFileName))
+                {
+                    string expected = $"{opEvent}{Environment.NewLine}";
+                    Assert.AreEqual(expected, actual);
+                }
+                else Assert.AreEqual(string.Empty, actual);
             }
         }
     }

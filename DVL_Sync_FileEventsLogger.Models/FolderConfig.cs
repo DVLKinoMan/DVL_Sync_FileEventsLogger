@@ -14,7 +14,7 @@ namespace DVL_Sync_FileEventsLogger.Models
                                                             | SystemNotifyFilters.LastWrite
                                                             | SystemNotifyFilters.FileName
                                                             | SystemNotifyFilters.DirectoryName;
-        public bool WatchLogFiles { get; set; } = false;
+        //public bool WatchLogFiles { get; set; } = false;
         public bool WatchHiddenFiles { get; set; } = false;
         /// <summary>
         /// File Paths, which Events would not be Handled
@@ -28,22 +28,22 @@ namespace DVL_Sync_FileEventsLogger.Models
                 return false;
 
             //Todo: Maybe It is not watcher is not configured to log at all
-            if (!this.WatchLogFiles)
+            //if (!this.WatchLogFiles)
+            //{
+            if (!textLogFileName.IsNullOrEmpty())
             {
-                if (!textLogFileName.IsNullOrEmpty())
-                {
-                    string txtPath = Path.GetFullPath($"{this.FolderPath}/{textLogFileName}");
-                    if (IsLogFile(operation.FilePath,txtPath))
-                        return false;
-                }
-
-                if (!jsonLogFileName.IsNullOrEmpty())
-                {
-                    string jsonPath = Path.GetFullPath($"{this.FolderPath}/{jsonLogFileName}");
-                    if (IsLogFile(operation.FilePath, jsonPath))
-                        return false;
-                }
+                string txtPath = Path.GetFullPath($"{this.FolderPath}/{textLogFileName}");
+                if (IsLogFile(operation.FilePath, txtPath))
+                    return false;
             }
+
+            if (!jsonLogFileName.IsNullOrEmpty())
+            {
+                string jsonPath = Path.GetFullPath($"{this.FolderPath}/{jsonLogFileName}");
+                if (IsLogFile(operation.FilePath, jsonPath))
+                    return false;
+            }
+            //}
 
             if (this.FilteredFiles != null && this.FilteredFiles.Contains(operation.FilePath))
                 return false;
@@ -51,14 +51,15 @@ namespace DVL_Sync_FileEventsLogger.Models
             return true;
         }
 
-        private bool IsLogFile(string fullPath, string logFilePath)
+        public static bool IsLogFile(string fullPath, string logFilePath)
         {
             string name = Path.GetFileName(fullPath);
             int index = name.LastIndexOf("- ");
             if (index < 0 || index + 2 >= fullPath.Length)
                 return false;
 
-            return string.Equals(fullPath.GetDirectoryPath().Concat(name.Substring(index + 2)), logFilePath);
+            var path = $"{fullPath.GetDirectoryPath()}{name.Substring(index + 2)}";
+            return string.Equals(path, logFilePath);
         }
     }
 }
