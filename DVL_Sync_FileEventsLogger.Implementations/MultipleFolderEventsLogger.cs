@@ -3,7 +3,7 @@ using DVL_Sync_FileEventsLogger.Models;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    public class MultipleFolderEventsLogger : IFolderEventsLogger
+    public sealed class MultipleFolderEventsLogger : IFolderEventsLogger
     {
         private readonly IFolderEventsLogger[] loggers;
 

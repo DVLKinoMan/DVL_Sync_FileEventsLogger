@@ -30,7 +30,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
         public void CreateOperationEventLoggedCorrectly()
         {
             var createOp = new CreateOperationEvent()
-                { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+                { FilePath = GetType().Assembly.Location, RaisedTime = new DateTime(2017, 11, 23)};
             var folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
 
             OperationEventLoggedCorrectly(createOp, folderConfig);
@@ -40,7 +40,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
         public void EditOperationEventLoggedCorrectly()
         {
                 var editOp = new EditOperationEvent()
-                    { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+                    { FilePath = GetType().Assembly.Location, RaisedTime = new DateTime(2017, 11, 23) };
                 var folderConfig = new FolderConfig { FolderPath = "D:\\DVL_Sync_WatcherTestingFile2" };
 
                 OperationEventLoggedCorrectly(editOp, folderConfig);
@@ -50,7 +50,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
         public void DeleteOperationEventLoggedCorrectly()
         {
                 var delOp = new DeleteOperationEvent()
-                    { FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today };
+                    { FilePath = GetType().Assembly.Location, RaisedTime = new DateTime(2017, 11, 23) };
                 var folderConfig = new FolderConfig {FolderPath = "D:\\DVL_Sync_WatcherTestingFile2"};
 
                 OperationEventLoggedCorrectly(delOp, folderConfig);
@@ -61,7 +61,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
         {
             var renameOp = new RenameOperationEvent()
             {
-                FilePath = this.GetType().Assembly.Location, RaisedTime = DateTime.Today,
+                FilePath = GetType().Assembly.Location, RaisedTime = new DateTime(2017, 11, 23),
                 OldFilePath = "D:\\SomeInValidPath"
             };
             var folderConfig = new FolderConfig {FolderPath = "D:\\DVL_Sync_WatcherTestingFile2"};

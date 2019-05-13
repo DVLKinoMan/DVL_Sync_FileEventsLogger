@@ -4,7 +4,7 @@ using DVL_Sync_FileEventsLogger.Abstractions;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    public class FolderEventsHandlerViaLogging : IFolderEventsHandler
+    public sealed class FolderEventsHandlerViaLogging : IFolderEventsHandler
     {
         private readonly IFolderEventsLogger logger;
         private readonly IOperationEventFactory operationEventFactory;

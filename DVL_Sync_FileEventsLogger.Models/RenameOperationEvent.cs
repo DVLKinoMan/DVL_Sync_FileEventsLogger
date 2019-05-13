@@ -4,7 +4,6 @@ namespace DVL_Sync_FileEventsLogger.Models
 {
     public sealed class RenameOperationEvent : OperationEvent
     {
-
         public string OldFilePath { get; set; }
         public string OldFileName  => Path.GetFileName(OldFilePath);
 

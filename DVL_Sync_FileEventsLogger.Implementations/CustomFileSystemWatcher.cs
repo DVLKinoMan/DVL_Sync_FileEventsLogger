@@ -4,7 +4,7 @@ using DVL_Sync_FileEventsLogger.Models;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    public class CustomFileSystemWatcher : IFolderWatcher
+    public sealed class CustomFileSystemWatcher : IFolderWatcher
     {
         private readonly FileSystemWatcher watcher = new FileSystemWatcher();
         private readonly IFolderEventsHandler folderEventsHandler;

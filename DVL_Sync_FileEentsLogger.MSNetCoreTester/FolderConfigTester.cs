@@ -32,7 +32,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017,11,27)
                 };
 
                 Assert.AreEqual(true, folderConfig.IsValid(op));
@@ -64,7 +64,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(true, folderConfig.IsValid(op));
@@ -97,7 +97,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(false, folderConfig.IsValid(op));
@@ -214,7 +214,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(
@@ -246,7 +246,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(true, folderConfig.IsValid(op));
@@ -279,7 +279,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(
@@ -311,7 +311,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(true, folderConfig.IsValid(op));
@@ -345,7 +345,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(false, folderConfig.IsValid(op));
@@ -375,7 +375,7 @@ namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
                 var op = new CreateOperationEvent
                 {
                     FilePath = stream.Name,
-                    RaisedTime = DateTime.Now
+                    RaisedTime = new DateTime(2017, 11, 27)
                 };
 
                 Assert.AreEqual(true, folderConfig.IsValid(op));

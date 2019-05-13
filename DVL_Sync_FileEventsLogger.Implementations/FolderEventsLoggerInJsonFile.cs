@@ -7,7 +7,7 @@ using DVL_Sync_FileEventsLogger.Models;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    class FolderEventsLoggerInJsonFile : IFolderEventsLogger
+    public sealed class FolderEventsLoggerInJsonFile : IFolderEventsLogger
     {
         private readonly StreamWriter streamWriter;
         private readonly FolderConfig folderConfig;

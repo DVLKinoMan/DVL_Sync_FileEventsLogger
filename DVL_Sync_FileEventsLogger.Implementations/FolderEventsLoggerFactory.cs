@@ -7,7 +7,7 @@ using System.IO;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    public class FolderEventsLoggerFactory : IFolderEventsLoggerFactory
+    public sealed class FolderEventsLoggerFactory : IFolderEventsLoggerFactory
     {
         //public IFolderEventsLogger CreateFolderEventsLogger(LoggerType loggerType, FolderConfig folderConfig)
         //{

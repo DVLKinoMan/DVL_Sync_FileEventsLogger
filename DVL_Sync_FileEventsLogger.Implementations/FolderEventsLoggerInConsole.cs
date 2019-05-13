@@ -6,7 +6,7 @@ using DVL_Sync_FileEventsLogger.Models;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
-    public class FolderEventsLoggerInConsole : IFolderEventsLogger
+    public sealed class FolderEventsLoggerInConsole : IFolderEventsLogger
     {
         private readonly FolderConfig folderConfig;
 
