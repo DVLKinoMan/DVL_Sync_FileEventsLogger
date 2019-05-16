@@ -11,7 +11,8 @@ namespace DVL_Sync_FileEventsLogger.OnWindows.Helpers
     {
         public static bool TryCreateShortcut(string APP_ID)
         {
-            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Microsoft\\Windows\\Start Menu\\Programs\\Desktop Toasts Sample CS.lnk";
+            //\\Microsoft\\Windows\\Start Menu
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu) + "\\Programs\\Desktop Toasts Sample CS.lnk";
             if (!File.Exists(shortcutPath))
             {
                 InstallShortcut(APP_ID, shortcutPath);

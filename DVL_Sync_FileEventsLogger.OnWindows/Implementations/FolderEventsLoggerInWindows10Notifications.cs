@@ -18,8 +18,8 @@ namespace DVL_Sync_FileEventsLogger.OnWindows.Implementations
         public FolderEventsLoggerInWindows10Notifications(FolderConfig folderConfig, string appid)
         {
             this.folderConfig = folderConfig;
-            this.applicationID = appid;
-            Windows10NotificationsHelper.TryCreateShortcut(this.applicationID);
+            applicationID = appid;
+            Windows10NotificationsHelper.TryCreateShortcut(applicationID);
         }
 
         public void Dispose()
@@ -29,11 +29,11 @@ namespace DVL_Sync_FileEventsLogger.OnWindows.Implementations
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
-            if (!this.folderConfig.IsValid(operation))
+            if (!folderConfig.IsValid(operation))
                 return;
 
             //This is not responsibility of this operation. It needs abstraction
-            ToastContent content = new ToastContent()
+            var content = new ToastContent()
             {
                 Launch = "app-defined-string",
                 Visual = new ToastVisual()
@@ -66,10 +66,10 @@ namespace DVL_Sync_FileEventsLogger.OnWindows.Implementations
             };
 
             // Display toast
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(content.GetContent());
 
-            ToastNotificationManager.CreateToastNotifier(this.applicationID).Show(new ToastNotification(doc));
+            ToastNotificationManager.CreateToastNotifier(applicationID).Show(new ToastNotification(doc));
         }
     }
 }

@@ -1,13 +1,20 @@
-﻿using System.Extensions;
+﻿//using System.ComponentModel;
+using System.Collections.Generic;
+using System.Extensions;
 using DVL_Sync_FileEventsLogger.Extensions;
 using System.Reflection;
 using System.ServiceProcess;
-using System.Threading;
+//using System.Threading;
+//using System.Threading;
+//using System.Threading.Tasks;
+using DVL_Sync_FileEventsLogger.Abstractions;
 
 namespace DVL_Sync_FileEventsLogger
 {
     partial class EventsLoggerService : ServiceBase
     {
+        private IEnumerable<IFolderWatcher> watchers;
+
         public EventsLoggerService() => InitializeComponent();
 
         public void OnDebug() => OnStart(null);
@@ -16,12 +23,12 @@ namespace DVL_Sync_FileEventsLogger
         {
             string configName = "config.json";
 
-            var watcher =
+            watchers =
                 $"{Assembly.GetAssembly(typeof(ProjectInstaller)).Location.GetDirectoryPath()}/{configName}".GetFoldersWatcherConfig().GetFolderWatchers();
-            watcher.StartWatching();
-
-            Thread.Sleep(Timeout.Infinite);
+            watchers.StartWatching();
         }
+        //Thread.Sleep(Timeout.Infinite);
+        
 
         protected override void OnStop()
         {
