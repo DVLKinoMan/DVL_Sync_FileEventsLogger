@@ -36,14 +36,14 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelIFolderWatcher = new System.Windows.Forms.Label();
             this.textBoxIFolderWatcher = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxFoldersConfigsPath = new System.Windows.Forms.TextBox();
             this.labelFoldersConfigsPath = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxIF = new System.Windows.Forms.TextBox();
+            this.labelIFolderEventsHandler = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelIOperationEventFactory = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelLoggerTypes = new System.Windows.Forms.Label();
             this.buttonBrowseFolderConfigsPath = new System.Windows.Forms.Button();
             this.openFileDialogFolderConfigsPath = new System.Windows.Forms.OpenFileDialog();
             this.customContextMenu.SuspendLayout();
@@ -69,7 +69,7 @@
             // 
             this.dsafdadfToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dsafdadfToolStripMenuItem.Name = "dsafdadfToolStripMenuItem";
-            this.dsafdadfToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dsafdadfToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
             this.dsafdadfToolStripMenuItem.Text = "Open";
             this.dsafdadfToolStripMenuItem.Click += new System.EventHandler(this.DsafdadfToolStripMenuItem_Click);
             // 
@@ -98,12 +98,12 @@
             this.textBoxIFolderWatcher.Size = new System.Drawing.Size(190, 20);
             this.textBoxIFolderWatcher.TabIndex = 2;
             // 
-            // textBox1
+            // textBoxFoldersConfigsPath
             // 
-            this.textBox1.Location = new System.Drawing.Point(225, 117);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(190, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBoxFoldersConfigsPath.Location = new System.Drawing.Point(225, 117);
+            this.textBoxFoldersConfigsPath.Name = "textBoxFoldersConfigsPath";
+            this.textBoxFoldersConfigsPath.Size = new System.Drawing.Size(190, 20);
+            this.textBoxFoldersConfigsPath.TabIndex = 4;
             // 
             // labelFoldersConfigsPath
             // 
@@ -115,22 +115,22 @@
             this.labelFoldersConfigsPath.TabIndex = 3;
             this.labelFoldersConfigsPath.Text = "FoldersConfigsPath:";
             // 
-            // textBox2
+            // textBoxIF
             // 
-            this.textBox2.Location = new System.Drawing.Point(225, 164);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(190, 20);
-            this.textBox2.TabIndex = 6;
+            this.textBoxIF.Location = new System.Drawing.Point(225, 164);
+            this.textBoxIF.Name = "textBoxIF";
+            this.textBoxIF.Size = new System.Drawing.Size(190, 20);
+            this.textBoxIF.TabIndex = 6;
             // 
-            // label2
+            // labelIFolderEventsHandler
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(46, 164);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 20);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "IFolderWatcher";
+            this.labelIFolderEventsHandler.AutoSize = true;
+            this.labelIFolderEventsHandler.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIFolderEventsHandler.Location = new System.Drawing.Point(46, 164);
+            this.labelIFolderEventsHandler.Name = "labelIFolderEventsHandler";
+            this.labelIFolderEventsHandler.Size = new System.Drawing.Size(168, 20);
+            this.labelIFolderEventsHandler.TabIndex = 5;
+            this.labelIFolderEventsHandler.Text = "IFolderEventsHandler:";
             // 
             // textBox3
             // 
@@ -139,15 +139,15 @@
             this.textBox3.Size = new System.Drawing.Size(190, 20);
             this.textBox3.TabIndex = 8;
             // 
-            // label3
+            // labelIOperationEventFactory
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(46, 211);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "IFolderWatcher";
+            this.labelIOperationEventFactory.AutoSize = true;
+            this.labelIOperationEventFactory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIOperationEventFactory.Location = new System.Drawing.Point(46, 211);
+            this.labelIOperationEventFactory.Name = "labelIOperationEventFactory";
+            this.labelIOperationEventFactory.Size = new System.Drawing.Size(182, 20);
+            this.labelIOperationEventFactory.TabIndex = 7;
+            this.labelIOperationEventFactory.Text = "IOperationEventFactory:";
             // 
             // textBox4
             // 
@@ -156,15 +156,15 @@
             this.textBox4.Size = new System.Drawing.Size(190, 20);
             this.textBox4.TabIndex = 10;
             // 
-            // label4
+            // labelLoggerTypes
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(46, 257);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(119, 20);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "IFolderWatcher";
+            this.labelLoggerTypes.AutoSize = true;
+            this.labelLoggerTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLoggerTypes.Location = new System.Drawing.Point(46, 257);
+            this.labelLoggerTypes.Name = "labelLoggerTypes";
+            this.labelLoggerTypes.Size = new System.Drawing.Size(105, 20);
+            this.labelLoggerTypes.TabIndex = 9;
+            this.labelLoggerTypes.Text = "LoggerTypes:";
             // 
             // buttonBrowseFolderConfigsPath
             // 
@@ -188,12 +188,12 @@
             this.ClientSize = new System.Drawing.Size(796, 580);
             this.Controls.Add(this.buttonBrowseFolderConfigsPath);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelLoggerTypes);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelIOperationEventFactory);
+            this.Controls.Add(this.textBoxIF);
+            this.Controls.Add(this.labelIFolderEventsHandler);
+            this.Controls.Add(this.textBoxFoldersConfigsPath);
             this.Controls.Add(this.labelFoldersConfigsPath);
             this.Controls.Add(this.textBoxIFolderWatcher);
             this.Controls.Add(this.labelIFolderWatcher);
@@ -215,14 +215,14 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label labelIFolderWatcher;
         private System.Windows.Forms.TextBox textBoxIFolderWatcher;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxFoldersConfigsPath;
         private System.Windows.Forms.Label labelFoldersConfigsPath;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxIF;
+        private System.Windows.Forms.Label labelIFolderEventsHandler;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelIOperationEventFactory;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelLoggerTypes;
         private System.Windows.Forms.Button buttonBrowseFolderConfigsPath;
         private System.Windows.Forms.OpenFileDialog openFileDialogFolderConfigsPath;
     }

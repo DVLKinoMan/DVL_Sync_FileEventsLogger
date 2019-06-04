@@ -1,5 +1,6 @@
 ﻿using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Extensions;
+using DVL_Sync_FileEventsLogger.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -9,6 +10,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
     public partial class WinForm : Form
     {
         private IEnumerable<IFolderWatcher> watchers;
+        private bool exitClicked = false;
+        private FoldersWatcherConfig folderWatcherConfig;
 
         public WinForm()
         {
@@ -40,14 +43,16 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            exitClicked = true;
             this.Close();
         }
 
         private void ButtonBrowseFolderConfigsPath_Click(object sender, EventArgs e)
         {
+            openFileDialogFolderConfigsPath.Filter = "Json files (*.json)|*.json";
             if (openFileDialogFolderConfigsPath.ShowDialog() == DialogResult.OK)
             {
-                //openFileDialogFolderConfigsPath.
+                textBoxFoldersConfigsPath.Text = openFileDialogFolderConfigsPath.FileName;
             }
         }
 
@@ -65,12 +70,14 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void WinForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.CloseReason
-            e.Cancel = true;
-            this.ShowInTaskbar = false;
-            this.WindowState = FormWindowState.Minimized;
-            this.Visible = false;
-            customNotifyIcon.Visible = true;
+            if (!exitClicked)
+            {
+                e.Cancel = true;
+                this.ShowInTaskbar = false;
+                this.WindowState = FormWindowState.Minimized;
+                this.Visible = false;
+                customNotifyIcon.Visible = true;
+            }
         }
     }
 }
