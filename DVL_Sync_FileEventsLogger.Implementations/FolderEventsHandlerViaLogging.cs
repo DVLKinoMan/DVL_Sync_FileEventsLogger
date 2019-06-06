@@ -15,6 +15,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             this.logger = logger;
         }
 
+        public void Dispose() => logger.Dispose();
+
         //public IFolderEventsHandler WithFolderEventsLogger(LoggerTypes logger)
         //{
         //    this.logger = logger;

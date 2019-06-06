@@ -49,16 +49,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WinForm.cs">
+    <Compile Include="FolderConfigDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForm.Designer.cs">
-      <DependentUpon>WinForm.cs</DependentUpon>
+    <Compile Include="FolderConfigDialogForm.Designer.cs">
+      <DependentUpon>FolderConfigDialogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FolderWatcherConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderWatcherConfigForm.Designer.cs">
+      <DependentUpon>FolderWatcherConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FilteredFileViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="WinForm.resx">
-      <DependentUpon>WinForm.cs</DependentUpon>
+    <EmbeddedResource Include="FolderConfigDialogForm.resx">
+      <DependentUpon>FolderConfigDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FolderWatcherConfigForm.resx">
+      <DependentUpon>FolderWatcherConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -73,6 +83,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\DVL_Sync_FileEventsLogger.WinForm.Models.FilteredFileViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -103,5 +114,6 @@
       <Name>DVL_Sync_FileEventsLogger.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

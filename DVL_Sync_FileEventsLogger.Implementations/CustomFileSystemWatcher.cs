@@ -37,5 +37,11 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             watcher.NotifyFilter = folderConfig.NotifyFilters;
             watcher.IncludeSubdirectories = folderConfig.IncludeSubDirectories;
         }
+
+        public void Dispose()
+        {
+            watcher.Dispose();
+            folderEventsHandler.Dispose();
+        } 
     }
 }

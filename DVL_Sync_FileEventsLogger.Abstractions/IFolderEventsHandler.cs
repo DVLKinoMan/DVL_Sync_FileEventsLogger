@@ -2,7 +2,7 @@
 
 namespace DVL_Sync_FileEventsLogger.Abstractions
 {
-    public interface IFolderEventsHandler
+    public interface IFolderEventsHandler : IDisposable
     {
         void OnChanged(object sender, EventArgs e);
         void OnCreated(object sender, EventArgs e);

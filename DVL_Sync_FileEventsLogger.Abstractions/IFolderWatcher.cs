@@ -1,6 +1,8 @@
-﻿namespace DVL_Sync_FileEventsLogger.Abstractions
+﻿using System;
+
+namespace DVL_Sync_FileEventsLogger.Abstractions
 {
-    public interface IFolderWatcher
+    public interface IFolderWatcher : IDisposable
     {
         void StartWatching();
     }

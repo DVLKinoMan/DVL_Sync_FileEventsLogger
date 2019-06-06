@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVL_Sync_FileEventsLogger.WinForm
@@ -16,7 +13,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WinForm());
+            Application.Run(new FolderWatcherConfigurationForm());
         }
     }
 }
