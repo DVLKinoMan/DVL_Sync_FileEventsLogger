@@ -17,10 +17,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
     {
         public FolderConfig folderConfig;
 
-        public FolderConfigDialogForm()
-        {
-            InitializeComponent();
-        }
+        public FolderConfigDialogForm() => InitializeComponent();
 
         private void ButtonBrowseFolderPath_Click(object sender, EventArgs e)
         {
@@ -34,8 +31,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             if (this.openFileDialogFilteredFiles.ShowDialog() == DialogResult.OK)
             {
-                this.dataGridViewFilteredFiles.Rows.Add(new FilteredFileViewModel
-                    {FilePath = this.openFileDialogFilteredFiles.FileName});
+                var index = this.dataGridViewFilteredFiles.Rows.Add();
+                this.dataGridViewFilteredFiles.Rows[index].Cells["ColumnFilePath"].Value = this.openFileDialogFilteredFiles.FileName;
             }
         }
 
@@ -63,7 +60,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             foreach (DataGridViewRow row in this.dataGridViewFilteredFiles.Rows)
             {
-                var k = (FilteredFileViewModel) row.DataBoundItem;
+                var k = new FilteredFileViewModel {FilePath = row.Cells["ColumnFilePath"].Value.ToString()};
                 yield return k;
             }
         }

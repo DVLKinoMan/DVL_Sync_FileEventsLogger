@@ -18,6 +18,9 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         private HashSet<LoggerType> loggerTypesHashSet;
         private readonly string configName = "config.json";
 
+        private List<FolderConfig> folderConfigs;
+        private readonly string applicationName = "DVL_Sync_FileEventsLogger";
+
         public FolderWatcherConfigurationForm()
         {
             InitializeComponent();
@@ -27,6 +30,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
             this.customNotifyIcon.Visible = true;
+            this.tabControl1.TabPages.Remove(this.tabPageFolderConfigs);
             //customNotifyIcon.ShowBalloonTip(500);
             //this.Hide();
         }
@@ -109,6 +113,9 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void ButtonSaveConfiguration_Click(object sender, EventArgs e)
         {
+            if (!ValideFolderWatcherConfig())
+                return;
+
             this.folderWatchersConfig.IFolderWatcher = this.textBoxIFolderWatcher.Text;
             this.folderWatchersConfig.LoggerTypes = this.loggerTypesHashSet.ToArray();
             this.folderWatchersConfig.FoldersConfigsPath = this.textBoxFoldersConfigsPath.Text;
@@ -117,11 +124,59 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             if (this.checkBoxWindows10Notification.Checked)
                 this.folderWatchersConfig.AppID = this.textBoxAppID.Text;
             else this.folderWatchersConfig.AppID = null;
-            SaveConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
-            Close();
+
+            //Saving Part
+            SaveFolderConfigsIfRequired();
+            SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
+
+            ////Set Watchers
+            //SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+            //SetWatchers();
+
+            //Close();
+            Application.Restart();
+            Environment.Exit(0);
         }
 
         private void ButtonClose_Click(object sender, EventArgs e) => Close();
+
+        private void ButtonAddFolderConfig_Click(object sender, EventArgs e)
+        {
+            var form = new FolderConfigDialogForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                AddFolderConfigToForm(form.folderConfig);
+            }
+        }
+
+        private void ButtonRemoveFolderConfig_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow item in this.dataGridViewFolderConfigs.SelectedRows)
+            {
+                int index = item.Index;
+                if (index >= 0)
+                {
+                    this.dataGridViewFolderConfigs.Rows.RemoveAt(index);
+                    this.folderConfigs.RemoveAt(index);
+                }
+            }
+        }
+
+        private void CheckBoxAddManuallyConfigs_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxAddManuallyConfigs.Checked)
+            {
+                this.tabControl1.TabPages.Add(this.tabPageFolderConfigs);
+                this.textBoxFoldersConfigsPath.Enabled = false;
+                this.buttonBrowseFolderConfigsPath.Enabled = false;
+            }
+            else
+            {
+                this.tabControl1.TabPages.Remove(this.tabPageFolderConfigs);
+                this.textBoxFoldersConfigsPath.Enabled = true;
+                this.buttonBrowseFolderConfigsPath.Enabled = true;
+            }
+        }
 
         #endregion
 
@@ -138,6 +193,11 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         private void OpenForm()
         {
             SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+
+            this.folderConfigs = this.folderWatchersConfig.FoldersConfigsPath.GetFolderConfigs().ToList();
+            foreach (var folderConfig in this.folderConfigs)
+                AddFolderConfigToForm(folderConfig);
+
             SetWatchers();
             ShowForm();
         }
@@ -206,6 +266,19 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             else this.checkBoxWindows10Notification.Checked = false;
         }
 
+        private void AddFolderConfigToForm(FolderConfig folderConfig)
+        {
+            var index = this.dataGridViewFolderConfigs.Rows.Add();
+            this.dataGridViewFolderConfigs.Rows[index].Cells["ColumnFolderPath"].Value =
+                folderConfig.FolderPath;
+            this.dataGridViewFolderConfigs.Rows[index].Cells["ColumnIncludeSubdirectories"].Value =
+                folderConfig.IncludeSubDirectories;
+            this.dataGridViewFolderConfigs.Rows[index].Cells["ColumnWatchHiddenFiles"].Value =
+                folderConfig.WatchHiddenFiles;
+            this.dataGridViewFolderConfigs.Rows[index].Cells["ColumnFilteredFiles"].Value =
+                string.Join(", ", folderConfig.FilteredFiles);
+        }
+
         #endregion
 
         ///// <summary>
@@ -221,9 +294,20 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         #region Functional Methods
 
-        private void SaveConfigFile(string path)
+        private void SaveFolderWatcherConfigFile(string path)
         {
             string jsonString = JsonConvert.SerializeObject(this.folderWatchersConfig);
+            using (var stream = new StreamWriter(path, false))
+            {
+                stream.Write(jsonString);
+            }
+        }
+
+        private void SaveFoldersConfigsFile(string path)
+        {
+            this.folderWatchersConfig.FoldersConfigsPath = path;
+
+            string jsonString = JsonConvert.SerializeObject(this.folderConfigs);
             using (var stream = new StreamWriter(path, false))
             {
                 stream.Write(jsonString);
@@ -236,6 +320,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
                 this.watchers.Dispose();
             if (this.folderWatchersConfig == null)
                 return;
+            if (this.watchers != null)
+                this.watchers = null;
             this.watchers = this.folderWatchersConfig.GetFolderWatchers();
             this.watchers.StartWatching();
         }
@@ -252,18 +338,26 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
             SetLoggerTypes();
 
-            //SaveConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
+            //SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
+        }
+
+        private bool ValideFolderWatcherConfig()
+        {
+            if (!this.checkBoxAddManuallyConfigs.Checked && string.IsNullOrEmpty(this.textBoxFoldersConfigsPath.Text))
+                return false;
+
+            return true;
+        }
+
+        private void SaveFolderConfigsIfRequired()
+        {
+            if (!this.checkBoxAddManuallyConfigs.Checked)
+                return;
+
+            SaveFoldersConfigsFile($"{DriveInfo.GetDrives()[0].Name}\\{this.applicationName}\\FoldersConfigs.json");
         }
 
         #endregion
 
-        private void ButtonAddFolderConfig_Click(object sender, EventArgs e)
-        {
-            var form = new FolderConfigDialogForm();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                this.dataGridViewFolderConfigs.Rows.Add(form.folderConfig);
-            }
-        }
     }
 }

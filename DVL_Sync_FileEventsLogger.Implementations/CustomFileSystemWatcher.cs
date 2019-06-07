@@ -40,6 +40,7 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         public void Dispose()
         {
+            watcher.EnableRaisingEvents = false;
             watcher.Dispose();
             folderEventsHandler.Dispose();
         } 

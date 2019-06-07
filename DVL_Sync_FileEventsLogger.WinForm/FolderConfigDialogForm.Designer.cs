@@ -39,11 +39,11 @@
             this.dataGridViewFilteredFiles = new System.Windows.Forms.DataGridView();
             this.buttonAddFilteredFile = new System.Windows.Forms.Button();
             this.openFileDialogFilteredFiles = new System.Windows.Forms.OpenFileDialog();
-            this.ColumnFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
-            this.filteredFileViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
             this.buttonSaveConfiguration = new System.Windows.Forms.Button();
+            this.ColumnFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filteredFileViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilteredFiles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filteredFileViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -78,6 +78,8 @@
             // checkBoxIncludeSubdirectories
             // 
             this.checkBoxIncludeSubdirectories.AutoSize = true;
+            this.checkBoxIncludeSubdirectories.Checked = true;
+            this.checkBoxIncludeSubdirectories.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxIncludeSubdirectories.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxIncludeSubdirectories.Location = new System.Drawing.Point(34, 90);
             this.checkBoxIncludeSubdirectories.Name = "checkBoxIncludeSubdirectories";
@@ -104,6 +106,7 @@
             this.dataGridViewFilteredFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFilteredFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnFilePath});
+            this.dataGridViewFilteredFiles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridViewFilteredFiles.Location = new System.Drawing.Point(34, 193);
             this.dataGridViewFilteredFiles.Name = "dataGridViewFilteredFiles";
             this.dataGridViewFilteredFiles.Size = new System.Drawing.Size(641, 207);
@@ -124,12 +127,6 @@
             // 
             this.openFileDialogFilteredFiles.FileName = "openFileDialogFilteredFiles";
             // 
-            // ColumnFilePath
-            // 
-            this.ColumnFilePath.HeaderText = "File Path";
-            this.ColumnFilePath.Name = "ColumnFilePath";
-            this.ColumnFilePath.Width = 500;
-            // 
             // button1
             // 
             this.button1.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -141,12 +138,9 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // filteredFileViewModelBindingSource
-            // 
-            this.filteredFileViewModelBindingSource.DataSource = typeof(DVL_Sync_FileEventsLogger.WinForm.Models.FilteredFileViewModel);
-            // 
             // buttonClose
             // 
+            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonClose.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonClose.Location = new System.Drawing.Point(202, 418);
@@ -159,6 +153,7 @@
             // 
             // buttonSaveConfiguration
             // 
+            this.buttonSaveConfiguration.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonSaveConfiguration.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSaveConfiguration.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.buttonSaveConfiguration.Location = new System.Drawing.Point(405, 418);
@@ -168,6 +163,16 @@
             this.buttonSaveConfiguration.Text = "Save";
             this.buttonSaveConfiguration.UseVisualStyleBackColor = true;
             this.buttonSaveConfiguration.Click += new System.EventHandler(this.ButtonSaveConfiguration_Click);
+            // 
+            // ColumnFilePath
+            // 
+            this.ColumnFilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnFilePath.HeaderText = "File Path";
+            this.ColumnFilePath.Name = "ColumnFilePath";
+            // 
+            // filteredFileViewModelBindingSource
+            // 
+            this.filteredFileViewModelBindingSource.DataSource = typeof(DVL_Sync_FileEventsLogger.WinForm.Models.FilteredFileViewModel);
             // 
             // FolderConfigDialogForm
             // 
@@ -187,7 +192,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FolderConfigDialogForm";
-            this.Text = "FolderConfigDialogForm";
+            this.Text = "Folder Config";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilteredFiles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filteredFileViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -207,9 +212,9 @@
         private System.Windows.Forms.Button buttonAddFilteredFile;
         private System.Windows.Forms.OpenFileDialog openFileDialogFilteredFiles;
         private System.Windows.Forms.BindingSource filteredFileViewModelBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFilePath;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button buttonSaveConfiguration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFilePath;
     }
 }

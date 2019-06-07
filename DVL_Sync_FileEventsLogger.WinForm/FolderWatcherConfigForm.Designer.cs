@@ -54,17 +54,20 @@
             this.labelAppID = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageWatcherConfig = new System.Windows.Forms.TabPage();
+            this.tabPageFolderConfigs = new System.Windows.Forms.TabPage();
             this.dataGridViewFolderConfigs = new System.Windows.Forms.DataGridView();
+            this.buttonAddFolderConfig = new System.Windows.Forms.Button();
+            this.buttonRemoveFolderConfig = new System.Windows.Forms.Button();
             this.ColumnFolderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIncludeSubDirectories = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColumnWatchHiddenFiles = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.buttonAddFolderConfig = new System.Windows.Forms.Button();
+            this.ColumnFilteredFiles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkBoxAddManuallyConfigs = new System.Windows.Forms.CheckBox();
             this.customContextMenu.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabPageWatcherConfig.SuspendLayout();
+            this.tabPageFolderConfigs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFolderConfigs)).BeginInit();
             this.SuspendLayout();
             // 
@@ -286,51 +289,53 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageWatcherConfig);
+            this.tabControl1.Controls.Add(this.tabPageFolderConfigs);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(687, 297);
             this.tabControl1.TabIndex = 20;
             // 
-            // tabPage1
+            // tabPageWatcherConfig
             // 
-            this.tabPage1.Controls.Add(this.labelFoldersConfigsPath);
-            this.tabPage1.Controls.Add(this.labelIFolderWatcher);
-            this.tabPage1.Controls.Add(this.textBoxIFolderWatcher);
-            this.tabPage1.Controls.Add(this.textBoxAppID);
-            this.tabPage1.Controls.Add(this.textBoxFoldersConfigsPath);
-            this.tabPage1.Controls.Add(this.labelAppID);
-            this.tabPage1.Controls.Add(this.labelIFolderEventsHandler);
-            this.tabPage1.Controls.Add(this.textBoxIFolderEventsHandler);
-            this.tabPage1.Controls.Add(this.checkBoxWindows10Notification);
-            this.tabPage1.Controls.Add(this.labelIOperationEventFactory);
-            this.tabPage1.Controls.Add(this.checkBoxJsonFile);
-            this.tabPage1.Controls.Add(this.textBoxIOperationEventFactory);
-            this.tabPage1.Controls.Add(this.checkBoxConsole);
-            this.tabPage1.Controls.Add(this.labelLoggerTypes);
-            this.tabPage1.Controls.Add(this.checkBoxTextFile);
-            this.tabPage1.Controls.Add(this.buttonBrowseFolderConfigsPath);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(679, 271);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageWatcherConfig.Controls.Add(this.checkBoxAddManuallyConfigs);
+            this.tabPageWatcherConfig.Controls.Add(this.labelFoldersConfigsPath);
+            this.tabPageWatcherConfig.Controls.Add(this.labelIFolderWatcher);
+            this.tabPageWatcherConfig.Controls.Add(this.textBoxIFolderWatcher);
+            this.tabPageWatcherConfig.Controls.Add(this.textBoxAppID);
+            this.tabPageWatcherConfig.Controls.Add(this.textBoxFoldersConfigsPath);
+            this.tabPageWatcherConfig.Controls.Add(this.labelAppID);
+            this.tabPageWatcherConfig.Controls.Add(this.labelIFolderEventsHandler);
+            this.tabPageWatcherConfig.Controls.Add(this.textBoxIFolderEventsHandler);
+            this.tabPageWatcherConfig.Controls.Add(this.checkBoxWindows10Notification);
+            this.tabPageWatcherConfig.Controls.Add(this.labelIOperationEventFactory);
+            this.tabPageWatcherConfig.Controls.Add(this.checkBoxJsonFile);
+            this.tabPageWatcherConfig.Controls.Add(this.textBoxIOperationEventFactory);
+            this.tabPageWatcherConfig.Controls.Add(this.checkBoxConsole);
+            this.tabPageWatcherConfig.Controls.Add(this.labelLoggerTypes);
+            this.tabPageWatcherConfig.Controls.Add(this.checkBoxTextFile);
+            this.tabPageWatcherConfig.Controls.Add(this.buttonBrowseFolderConfigsPath);
+            this.tabPageWatcherConfig.Location = new System.Drawing.Point(4, 22);
+            this.tabPageWatcherConfig.Name = "tabPageWatcherConfig";
+            this.tabPageWatcherConfig.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageWatcherConfig.Size = new System.Drawing.Size(679, 271);
+            this.tabPageWatcherConfig.TabIndex = 0;
+            this.tabPageWatcherConfig.Text = "Folder Watcher Config";
+            this.tabPageWatcherConfig.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabPageFolderConfigs
             // 
-            this.tabPage2.Controls.Add(this.buttonAddFolderConfig);
-            this.tabPage2.Controls.Add(this.dataGridViewFolderConfigs);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(679, 271);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageFolderConfigs.Controls.Add(this.buttonRemoveFolderConfig);
+            this.tabPageFolderConfigs.Controls.Add(this.buttonAddFolderConfig);
+            this.tabPageFolderConfigs.Controls.Add(this.dataGridViewFolderConfigs);
+            this.tabPageFolderConfigs.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFolderConfigs.Name = "tabPageFolderConfigs";
+            this.tabPageFolderConfigs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFolderConfigs.Size = new System.Drawing.Size(679, 271);
+            this.tabPageFolderConfigs.TabIndex = 1;
+            this.tabPageFolderConfigs.Text = "Folder Configs";
+            this.tabPageFolderConfigs.UseVisualStyleBackColor = true;
             // 
             // dataGridViewFolderConfigs
             // 
@@ -340,11 +345,35 @@
             this.dataGridViewFolderConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnFolderPath,
             this.ColumnIncludeSubDirectories,
-            this.ColumnWatchHiddenFiles});
+            this.ColumnWatchHiddenFiles,
+            this.ColumnFilteredFiles});
+            this.dataGridViewFolderConfigs.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridViewFolderConfigs.Location = new System.Drawing.Point(6, 46);
             this.dataGridViewFolderConfigs.Name = "dataGridViewFolderConfigs";
-            this.dataGridViewFolderConfigs.Size = new System.Drawing.Size(667, 150);
+            this.dataGridViewFolderConfigs.Size = new System.Drawing.Size(667, 219);
             this.dataGridViewFolderConfigs.TabIndex = 0;
+            // 
+            // buttonAddFolderConfig
+            // 
+            this.buttonAddFolderConfig.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.buttonAddFolderConfig.Location = new System.Drawing.Point(548, 17);
+            this.buttonAddFolderConfig.Name = "buttonAddFolderConfig";
+            this.buttonAddFolderConfig.Size = new System.Drawing.Size(125, 23);
+            this.buttonAddFolderConfig.TabIndex = 8;
+            this.buttonAddFolderConfig.Text = "Add FolderConfig";
+            this.buttonAddFolderConfig.UseVisualStyleBackColor = true;
+            this.buttonAddFolderConfig.Click += new System.EventHandler(this.ButtonAddFolderConfig_Click);
+            // 
+            // buttonRemoveFolderConfig
+            // 
+            this.buttonRemoveFolderConfig.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.buttonRemoveFolderConfig.Location = new System.Drawing.Point(417, 17);
+            this.buttonRemoveFolderConfig.Name = "buttonRemoveFolderConfig";
+            this.buttonRemoveFolderConfig.Size = new System.Drawing.Size(125, 23);
+            this.buttonRemoveFolderConfig.TabIndex = 9;
+            this.buttonRemoveFolderConfig.Text = "Remove FolderConfig";
+            this.buttonRemoveFolderConfig.UseVisualStyleBackColor = true;
+            this.buttonRemoveFolderConfig.Click += new System.EventHandler(this.ButtonRemoveFolderConfig_Click);
             // 
             // ColumnFolderPath
             // 
@@ -362,16 +391,22 @@
             this.ColumnWatchHiddenFiles.HeaderText = "WatchHiddenFiles";
             this.ColumnWatchHiddenFiles.Name = "ColumnWatchHiddenFiles";
             // 
-            // buttonAddFolderConfig
+            // ColumnFilteredFiles
             // 
-            this.buttonAddFolderConfig.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.buttonAddFolderConfig.Location = new System.Drawing.Point(548, 17);
-            this.buttonAddFolderConfig.Name = "buttonAddFolderConfig";
-            this.buttonAddFolderConfig.Size = new System.Drawing.Size(125, 23);
-            this.buttonAddFolderConfig.TabIndex = 8;
-            this.buttonAddFolderConfig.Text = "Add FolderConfig";
-            this.buttonAddFolderConfig.UseVisualStyleBackColor = true;
-            this.buttonAddFolderConfig.Click += new System.EventHandler(this.ButtonAddFolderConfig_Click);
+            this.ColumnFilteredFiles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnFilteredFiles.HeaderText = "Filtered Files";
+            this.ColumnFilteredFiles.Name = "ColumnFilteredFiles";
+            // 
+            // checkBoxAddManuallyConfigs
+            // 
+            this.checkBoxAddManuallyConfigs.AutoSize = true;
+            this.checkBoxAddManuallyConfigs.Location = new System.Drawing.Point(467, 55);
+            this.checkBoxAddManuallyConfigs.Name = "checkBoxAddManuallyConfigs";
+            this.checkBoxAddManuallyConfigs.Size = new System.Drawing.Size(128, 17);
+            this.checkBoxAddManuallyConfigs.TabIndex = 19;
+            this.checkBoxAddManuallyConfigs.Text = "Add Manually Configs";
+            this.checkBoxAddManuallyConfigs.UseVisualStyleBackColor = true;
+            this.checkBoxAddManuallyConfigs.CheckedChanged += new System.EventHandler(this.CheckBoxAddManuallyConfigs_CheckedChanged);
             // 
             // FolderWatcherConfigurationForm
             // 
@@ -390,9 +425,9 @@
             this.Load += new System.EventHandler(this.WinForm_Load);
             this.customContextMenu.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
+            this.tabPageWatcherConfig.ResumeLayout(false);
+            this.tabPageWatcherConfig.PerformLayout();
+            this.tabPageFolderConfigs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFolderConfigs)).EndInit();
             this.ResumeLayout(false);
 
@@ -424,13 +459,16 @@
         private System.Windows.Forms.Label labelAppID;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageWatcherConfig;
+        private System.Windows.Forms.TabPage tabPageFolderConfigs;
         private System.Windows.Forms.DataGridView dataGridViewFolderConfigs;
+        private System.Windows.Forms.Button buttonAddFolderConfig;
+        private System.Windows.Forms.Button buttonRemoveFolderConfig;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFolderPath;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnIncludeSubDirectories;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnWatchHiddenFiles;
-        private System.Windows.Forms.Button buttonAddFolderConfig;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFilteredFiles;
+        private System.Windows.Forms.CheckBox checkBoxAddManuallyConfigs;
     }
 }
 
