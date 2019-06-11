@@ -18,6 +18,11 @@ namespace System.Extensions
             return streamWriter;
         }
 
+        /// <summary>
+        /// Works if StreamWriter's BaseStream can be casted to FileStream
+        /// </summary>
+        /// <param name="streamWriter"></param>
+        /// <returns></returns>
         public static string FullPath(this StreamWriter streamWriter) => ((FileStream) streamWriter.BaseStream).Name;
 
         public static bool IsNullOrEmpty(this string str) => string.IsNullOrEmpty(str);
