@@ -46,5 +46,13 @@ namespace System.Extensions
             return fullPath.Remove(fullPath.Length - len, len);
         }
 
+        public static string SubtractPath(this string fullPath, string Exclusion)
+        {
+            if (fullPath.IndexOf(Exclusion) != 0)
+                return fullPath;
+
+            return fullPath.Remove(0, Exclusion.Length);
+        }
+
     }
 }
