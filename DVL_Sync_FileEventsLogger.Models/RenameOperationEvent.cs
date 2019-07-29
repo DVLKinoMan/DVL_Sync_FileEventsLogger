@@ -7,7 +7,7 @@ namespace DVL_Sync_FileEventsLogger.Models
         public string OldFilePath { get; set; }
         public string OldFileName  => Path.GetFileName(OldFilePath);
 
-        public override EventType EventType => EventType.Rename;
+        public override EventType EventType { get { return EventType.Rename; } set { } }
 
         public override string ToString() => $"{base.ToString()} OldFileName: {OldFileName} OldFilePath: {OldFilePath}";
     }

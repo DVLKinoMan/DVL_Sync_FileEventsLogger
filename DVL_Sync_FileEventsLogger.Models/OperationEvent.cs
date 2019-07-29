@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace DVL_Sync_FileEventsLogger.Models
@@ -17,9 +18,10 @@ namespace DVL_Sync_FileEventsLogger.Models
         Directory,
     }
 
+    [JsonConverter(typeof(OperationEventConverter))]
     public abstract class OperationEvent
     {
-        public abstract EventType EventType { get; }
+        public abstract EventType EventType { get; set; }
 
         public string FileName => Path.GetFileName(FilePath);
 
@@ -39,16 +41,16 @@ namespace DVL_Sync_FileEventsLogger.Models
 
     public sealed class CreateOperationEvent : OperationEvent
     {
-        public override EventType EventType => EventType.Create;
+        public override EventType EventType { get { return EventType.Create; } set { } }
     }
 
     public sealed class EditOperationEvent : OperationEvent
     {
-        public override EventType EventType => EventType.Edit;
+        public override EventType EventType { get { return EventType.Edit; } set { } }
     }
 
     public sealed class DeleteOperationEvent : OperationEvent
     {
-        public override EventType EventType => EventType.Delete;
+        public override EventType EventType { get { return EventType.Delete; } set { } }
     }
 }

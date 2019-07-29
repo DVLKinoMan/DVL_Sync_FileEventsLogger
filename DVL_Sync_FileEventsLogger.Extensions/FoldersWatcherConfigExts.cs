@@ -107,14 +107,14 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                     case LoggerType.TextFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
                             new StreamWriter(
-                                    $"{folderConfig.FolderPath}/{DateTime.Now.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"))} - {Constants.TextLogFileName}",
+                                    $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.TextLogFileName}",
                                     true)
                                 .SetAttributeToHidden().SetAutoFlush());
                         break;
                     case LoggerType.JsonFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
                             new StreamWriter(
-                                    $"{folderConfig.FolderPath}/{DateTime.Now.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"))} - {Constants.JsonLogFileName}",
+                                    $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.JsonLogFileName}",
                                     true)
                                 .SetAttributeToHidden().SetAutoFlush());
                         break;

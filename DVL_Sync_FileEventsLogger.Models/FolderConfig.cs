@@ -32,16 +32,18 @@ namespace DVL_Sync_FileEventsLogger.Models
             //{
             if (!textLogFileName.IsNullOrEmpty())
             {
-                string txtPath = Path.GetFullPath($"{this.FolderPath}/{textLogFileName}");
-                if (IsLogFile(operation.FilePath, txtPath))
+                //string txtPath = Path.GetFullPath($"{this.FolderPath}/{textLogFileName}");
+                //if (IsLogFile(operation.FilePath, txtPath))
+                if (IsLogFileWithLogName(operation.FilePath, textLogFileName))
                     return false;
             }
 
             if (!jsonLogFileName.IsNullOrEmpty())
             {
-                string jsonPath = Path.GetFullPath($"{this.FolderPath}/{jsonLogFileName}");
-                if (IsLogFile(operation.FilePath, jsonPath))
-                    return false;
+                //string jsonPath = Path.GetFullPath($"{this.FolderPath}/{jsonLogFileName}");
+                //if (IsLogFile(operation.FilePath, jsonPath))
+                    if (IsLogFileWithLogName(operation.FilePath, jsonLogFileName))
+                        return false;
             }
             //}
 
@@ -49,6 +51,12 @@ namespace DVL_Sync_FileEventsLogger.Models
                 return false;
 
             return true;
+        }
+
+        public bool IsLogFileWithLogName(string fullPath, string logName)
+        {
+            string logFilePath = Path.GetFullPath($"{this.FolderPath}/{logName}");
+            return IsLogFile(fullPath, logFilePath);
         }
 
         public static bool IsLogFile(string fullPath, string logFilePath)
