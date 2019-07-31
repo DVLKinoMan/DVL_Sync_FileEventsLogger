@@ -30,6 +30,14 @@ namespace DVL_Sync_FileEventsLogger.Models
         public DateTime RaisedTime { get; set; }
         public string FilePath { get; set; }
 
+        public static explicit operator FakeOperationEvent(OperationEvent op) => new FakeOperationEvent
+        {
+            EventType = op.EventType,
+            FilePath = op.FilePath,
+            FileType = op.FileType,
+            RaisedTime = op.RaisedTime
+        };
+
         public override string ToString() =>
             $"EventType: {EventType} FileName: {FileName} FileType: {FileType} RaisedTime: {RaisedTime} FilePath: {FilePath}";
     }
