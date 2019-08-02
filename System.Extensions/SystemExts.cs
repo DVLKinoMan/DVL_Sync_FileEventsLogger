@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 
 namespace System.Extensions
 {
@@ -51,7 +52,9 @@ namespace System.Extensions
             if (fullPath.IndexOf(Exclusion) != 0)
                 return fullPath;
 
-            return fullPath.Remove(0, Exclusion.Length);
+            string res = fullPath.Remove(0, Exclusion.Length);
+
+            return string.Concat(res.SkipWhile(ch => ch == '\\'));
         }
 
         public static string GetCustomString(this DateTime dateTime) => dateTime.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"));
