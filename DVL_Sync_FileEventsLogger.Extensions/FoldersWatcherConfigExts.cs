@@ -91,7 +91,7 @@ namespace DVL_Sync_FileEventsLogger.Extensions
             }
         }
 
-        private static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
+        public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, FolderConfig folderConfig)
         {
             foreach (var loggerType in loggerTypes)

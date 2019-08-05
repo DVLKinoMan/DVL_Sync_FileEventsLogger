@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Extensions\DVL_Sync_FileEventsLogger.Extensions.csproj" />
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Implementations\DVL_Sync_FileEventsLogger.Implementations.csproj" />
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj" />
+  </ItemGroup>
+
+</Project>
