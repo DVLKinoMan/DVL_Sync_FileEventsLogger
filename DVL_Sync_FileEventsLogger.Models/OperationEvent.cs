@@ -25,10 +25,20 @@ namespace DVL_Sync_FileEventsLogger.Models
 
         public string FileName => Path.GetFileName(FilePath);
 
-        public FileType FileType  => Directory.Exists(FilePath) ? FileType.Directory : FileType.File;
+        public FileType FileType { get; set; }
 
         public DateTime RaisedTime { get; set; }
-        public string FilePath { get; set; }
+        public string FilePath { get
+            {
+                return _filePath;
+            }
+            set
+            {
+                _filePath = value;
+                FileType = Directory.Exists(FilePath) ? FileType.Directory : (File.Exists(FilePath) ? FileType.File : FileType);
+            }
+        }
+        private string _filePath;
 
         public static explicit operator FakeOperationEvent(OperationEvent op) => new FakeOperationEvent
         {
