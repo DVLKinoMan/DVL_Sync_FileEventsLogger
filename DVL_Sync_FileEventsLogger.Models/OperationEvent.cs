@@ -34,11 +34,19 @@ namespace DVL_Sync_FileEventsLogger.Models
             }
             set
             {
-                _filePath = value;
-                FileType = Directory.Exists(FilePath) ? FileType.Directory : (File.Exists(FilePath) ? FileType.File : FileType);
+                _filePath = value.ToLower();
+                FileType = Directory.Exists(FilePath) ? FileType.Directory : (File.Exists(FilePath) ? FileType.File : DetermineFileType(FilePath));
             }
         }
         private string _filePath;
+
+        private FileType DetermineFileType(string filePath)
+        {
+            string filename = Path.GetFileName(filePath);
+            if (filename.Length >= 4 && filename[filename.Length - 4] == '.')
+                return FileType.File;
+            else return FileType.Directory;
+        }
 
         public static explicit operator FakeOperationEvent(OperationEvent op) => new FakeOperationEvent
         {

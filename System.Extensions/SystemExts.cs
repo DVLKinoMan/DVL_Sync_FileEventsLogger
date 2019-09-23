@@ -49,10 +49,15 @@ namespace System.Extensions
 
         public static string SubtractPath(this string fullPath, string Exclusion)
         {
+            if (Exclusion == null)
+                return fullPath;
+            Exclusion = Exclusion.ToLower();
+            string oldFullPath = fullPath;
+            fullPath = fullPath.ToLower();
             if (fullPath.IndexOf(Exclusion) != 0)
                 return fullPath;
 
-            string res = fullPath.Remove(0, Exclusion.Length);
+            string res = oldFullPath.Remove(0, Exclusion.Length);
 
             return string.Concat(res.SkipWhile(ch => ch == '\\'));
         }
