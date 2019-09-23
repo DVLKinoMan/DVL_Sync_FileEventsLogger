@@ -105,18 +105,12 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                         yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
                         break;
                     case LoggerType.TextFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
-                            new StreamWriter(
-                                    $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.TextLogFileName}",
-                                    true)
-                                .SetAttributeToHidden().SetAutoFlush());
+                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig, 
+                            $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.TextLogFileName}");
                         break;
                     case LoggerType.JsonFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
-                            new StreamWriter(
-                                    $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.JsonLogFileName}",
-                                    true)
-                                .SetAttributeToHidden().SetAutoFlush());
+                                    $"{folderConfig.FolderPath}/{DateTime.Now.GetCustomString()} - {Constants.JsonLogFileName}");
                         break;
                     case LoggerType.Windows10Notification:
                         yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,

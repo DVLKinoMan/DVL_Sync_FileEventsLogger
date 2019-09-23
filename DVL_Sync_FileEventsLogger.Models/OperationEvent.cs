@@ -34,7 +34,7 @@ namespace DVL_Sync_FileEventsLogger.Models
             }
             set
             {
-                _filePath = value.ToLower();
+                _filePath = value;//.ToLower();
                 FileType = Directory.Exists(FilePath) ? FileType.Directory : (File.Exists(FilePath) ? FileType.File : DetermineFileType(FilePath));
             }
         }

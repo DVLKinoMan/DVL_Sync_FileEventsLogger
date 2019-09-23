@@ -3,7 +3,7 @@
 //using System.IO;
 using DVL_Sync_FileEventsLogger.OnWindows.Implementations;
 using DVL_Sync_FileEventsLogger.Models;
-using System.IO;
+//using System.IO;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
@@ -42,8 +42,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         public IFolderEventsLogger CreateLoggerInConsole(FolderConfig folderConfig) =>
             new FolderEventsLoggerInConsole(folderConfig);
 
-        public IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, StreamWriter streamWriter) =>
-            new FolderEventsLoggerInFile(folderConfig, streamWriter);
+        public IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, string logFilePath) =>
+            new FolderEventsLoggerInFile(folderConfig, logFilePath);
         //{
         //    var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
         //    var stream = new StreamWriter(fullPath, true);
@@ -53,8 +53,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         //    return new FolderEventsLoggerInFile(stream, folderConfig);
         //}
 
-        public IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, StreamWriter streamWriter) =>
-            new FolderEventsLoggerInJsonFile(folderConfig, streamWriter);
+        public IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, string logFilePath) =>
+            new FolderEventsLoggerInJsonFile(folderConfig, logFilePath);
         //{
         //    var fullPath2 = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
         //    var stream2 = new StreamWriter(fullPath2, true);
