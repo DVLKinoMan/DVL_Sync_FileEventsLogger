@@ -24,7 +24,7 @@ namespace DVL_Sync_FileEventsLogger.Models
         public bool IsValid(OperationEvent operation, string textLogFileName = null, string jsonLogFileName = null)
         {
             var flInfo = new FileInfo(operation.FilePath);
-            if (!this.WatchHiddenFiles && flInfo.Attributes.HasFlag(FileAttributes.Hidden))
+            if (!this.WatchHiddenFiles && flInfo.Attributes.HasFlag(FileAttributes.Hidden) && operation.EventType != EventType.Delete)
                 return false;
 
             //Todo: Maybe It is not watcher is not configured to log at all
