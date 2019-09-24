@@ -19,8 +19,16 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
-            if (folderConfig.IsValid(operation))
-                Console.WriteLine(operation);
+            try
+            {
+                if (folderConfig.IsValid(operation))
+                    Console.WriteLine(operation);
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("Exception when logging operation");
+                Console.WriteLine(exc.ToString());
+            }
         }
 
         //{
