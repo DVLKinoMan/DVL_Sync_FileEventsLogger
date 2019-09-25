@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
 using System.Extensions;
+using System;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
@@ -28,10 +29,25 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
-            if (folderConfig.IsValid(operation, jsonLogFileName: Constants.JsonLogFileName))
+            try
             {
-                using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
-                    streamWriter.WriteLine(JsonConvert.SerializeObject(operation));
+                if (folderConfig.IsValid(operation, jsonLogFileName: Constants.JsonLogFileName))
+                    using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                        streamWriter.WriteLine(JsonConvert.SerializeObject(operation));
+            }
+#if NETFRAMEWORK
+            catch (Exception exc)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(exc.ToString());
+                    eventLog.WriteEntry("Log message example", EventLogEntryType.Information, 101, 1);
+                }
+            }
+#endif
+            catch (Exception exc) {
+                Console.WriteLine(exc.ToString());
             }
         }
     }

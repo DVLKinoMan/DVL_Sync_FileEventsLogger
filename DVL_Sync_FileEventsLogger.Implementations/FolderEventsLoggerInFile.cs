@@ -1,4 +1,5 @@
 ﻿//using DVL_Sync_FileEventsLogger.Domain.Extensions;
+using System;
 using System.Extensions;
 using System.IO;
 //using System.Extensions;
@@ -25,9 +26,27 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
         {
-            if (folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName))
-                using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
-                    streamWriter.WriteLine(operation);
+            try
+            {
+                if (folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName))
+                    using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                        streamWriter.WriteLine(operation);
+            }
+#if NETFRAMEWORK
+            catch (Exception exc)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(exc.ToString());
+                    eventLog.WriteEntry("Log message example", EventLogEntryType.Information, 101, 1);
+                }
+            }
+#endif
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.ToString());
+            }
         }
 
     }
