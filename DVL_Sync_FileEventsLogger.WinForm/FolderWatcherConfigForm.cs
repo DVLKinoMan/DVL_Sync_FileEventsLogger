@@ -4,6 +4,7 @@ using DVL_Sync_FileEventsLogger.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,14 +26,21 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             InitializeComponent();
 
-            SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
-            SetWatchers();
             this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
             this.customNotifyIcon.Visible = true;
             this.tabControl1.TabPages.Remove(this.tabPageFolderConfigs);
             //customNotifyIcon.ShowBalloonTip(500);
             //this.Hide();
+            try
+            {
+                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+                SetWatchers();
+            }
+            catch (Exception exc)
+            {
+                LogInEventsViewer(exc);
+            }
         }
 
         #region Events
@@ -113,29 +121,37 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void ButtonSaveConfiguration_Click(object sender, EventArgs e)
         {
-            if (!ValideFolderWatcherConfig())
-                return;
+            try
+            {
+                if (!ValideFolderWatcherConfig())
+                    return;
 
-            this.folderWatchersConfig.IFolderWatcher = this.textBoxIFolderWatcher.Text;
-            this.folderWatchersConfig.LoggerTypes = this.loggerTypesHashSet.ToArray();
-            this.folderWatchersConfig.FoldersConfigsPath = this.textBoxFoldersConfigsPath.Text;
-            this.folderWatchersConfig.IFolderEventsHandler = this.textBoxIFolderEventsHandler.Text;
-            this.folderWatchersConfig.IOperationEventFactory = this.textBoxIOperationEventFactory.Text;
-            if (this.checkBoxWindows10Notification.Checked)
-                this.folderWatchersConfig.AppID = this.textBoxAppID.Text;
-            else this.folderWatchersConfig.AppID = null;
+                this.folderWatchersConfig.IFolderWatcher = this.textBoxIFolderWatcher.Text;
+                this.folderWatchersConfig.LoggerTypes = this.loggerTypesHashSet.ToArray();
+                this.folderWatchersConfig.FoldersConfigsPath = this.textBoxFoldersConfigsPath.Text;
+                this.folderWatchersConfig.IFolderEventsHandler = this.textBoxIFolderEventsHandler.Text;
+                this.folderWatchersConfig.IOperationEventFactory = this.textBoxIOperationEventFactory.Text;
+                if (this.checkBoxWindows10Notification.Checked)
+                    this.folderWatchersConfig.AppID = this.textBoxAppID.Text;
+                else this.folderWatchersConfig.AppID = null;
 
-            //Saving Part
-            SaveFolderConfigsIfRequired();
-            SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
+                //Saving Part
+                SaveFolderConfigsIfRequired();
+                SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
 
-            ////Set Watchers
-            //SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
-            //SetWatchers();
+                ////Set Watchers
+                //SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+                //SetWatchers();
 
-            //Close();
-            Application.Restart();
-            Environment.Exit(0);
+                //Close();
+                Application.Restart();
+                Environment.Exit(0);
+            }
+            catch(Exception exc)
+            {
+                LogInEventsViewer(exc);
+                MessageBox.Show(exc.ToString());
+            }
         }
 
         private void ButtonClose_Click(object sender, EventArgs e) => Close();
@@ -192,14 +208,22 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void OpenForm()
         {
-            SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+            try
+            {
+                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
 
-            this.folderConfigs = this.folderWatchersConfig.FoldersConfigsPath.GetFolderConfigs().ToList();
-            foreach (var folderConfig in this.folderConfigs)
-                AddFolderConfigToForm(folderConfig);
+                this.folderConfigs = this.folderWatchersConfig.FoldersConfigsPath.GetFolderConfigs().ToList();
+                foreach (var folderConfig in this.folderConfigs)
+                    AddFolderConfigToForm(folderConfig);
 
-            SetWatchers();
-            ShowForm();
+                SetWatchers();
+                ShowForm();
+            }
+            catch(Exception exc)
+            {
+                LogInEventsViewer(exc);
+                MessageBox.Show(exc.ToString());
+            }
         }
 
         private void ShowForm()
@@ -341,13 +365,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             //SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
         }
 
-        private bool ValideFolderWatcherConfig()
-        {
-            if (!this.checkBoxAddManuallyConfigs.Checked && string.IsNullOrEmpty(this.textBoxFoldersConfigsPath.Text))
-                return false;
-
-            return true;
-        }
+        private bool ValideFolderWatcherConfig() => this.checkBoxAddManuallyConfigs.Checked || 
+            !string.IsNullOrEmpty(this.textBoxFoldersConfigsPath.Text);
 
         private void SaveFolderConfigsIfRequired()
         {
@@ -355,6 +374,15 @@ namespace DVL_Sync_FileEventsLogger.WinForm
                 return;
 
             SaveFoldersConfigsFile($"{DriveInfo.GetDrives()[0].Name}\\{this.applicationName}\\FoldersConfigs.json");
+        }
+
+        private void LogInEventsViewer(Exception exc)
+        {
+            using (var eventLog = new EventLog("Application"))
+            {
+                eventLog.Source = "Application";
+                eventLog.WriteEntry(exc.ToString());
+            }
         }
 
         #endregion

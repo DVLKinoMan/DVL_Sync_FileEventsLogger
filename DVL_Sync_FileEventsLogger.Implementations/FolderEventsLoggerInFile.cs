@@ -5,20 +5,23 @@ using System.IO;
 //using System.Extensions;
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
+using System.Diagnostics;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
     public sealed class FolderEventsLoggerInFile : IFolderEventsLogger
     {
         //private readonly StreamWriter streamWriter;
-        private readonly string logFilePath;
+        //private readonly string logFilePath;
         private readonly FolderConfig folderConfig;
+        private readonly Func<DateTime, string> logFilePathFunc;
 
-        public FolderEventsLoggerInFile(FolderConfig folderConfig, string logFilePath)
+        public FolderEventsLoggerInFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc)
         {
             //var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
             //this.streamWriter = streamWriter;
-            this.logFilePath = logFilePath;
+            //this.logFilePath = logFilePath;
+            this.logFilePathFunc = logFilePathFunc;
             this.folderConfig = folderConfig;
         }
 
@@ -29,17 +32,17 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             try
             {
                 if (folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName))
-                    using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                    //using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                    using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
                         streamWriter.WriteLine(operation);
             }
 #if NETFRAMEWORK
             catch (Exception exc)
             {
-                using (EventLog eventLog = new EventLog("Application"))
+                using (var eventLog = new EventLog("Application"))
                 {
                     eventLog.Source = "Application";
                     eventLog.WriteEntry(exc.ToString());
-                    eventLog.WriteEntry("Log message example", EventLogEntryType.Information, 101, 1);
                 }
             }
 #endif

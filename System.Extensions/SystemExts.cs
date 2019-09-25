@@ -62,7 +62,8 @@ namespace System.Extensions
             return string.Concat(res.SkipWhile(ch => ch == '\\'));
         }
 
-        public static string GetCustomString(this DateTime dateTime) => dateTime.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"));
+        public static string GetCustomString(this DateTime dateTime) =>/* dateTime.Format($"MM/dd/yyyy hI1 mmI2 sI3 tt", ("/", "-"), ("I1", "h"), ("I2", "min"), ("I3", "s"));*/
+             dateTime.Format($"MM/dd/yyyy", ("/", "-"));
 
         public static DateTime GetCustomDateTime(this string dateTimeString)
         {
@@ -73,11 +74,13 @@ namespace System.Extensions
             int day = int.Parse(dateArr[1]);
             int year = int.Parse(dateArr[2]);
 
-            int hour = int.Parse(arr[1].Replace("h", ""));
-            int min = int.Parse(arr[2].Replace("min", ""));
-            int sec = int.Parse(arr[3].Replace("s", ""));
+            //int hour = int.Parse(arr[1].Replace("h", ""));
+            //int min = int.Parse(arr[2].Replace("min", ""));
+            //int sec = int.Parse(arr[3].Replace("s", ""));
 
-            return new DateTime(year, month, day, arr[4] == "PM" && hour < 12 ? hour + 12 : hour, min, sec);
+            //return new DateTime(year, month, day, arr[4] == "PM" && hour < 12 ? hour + 12 : hour, min, sec);
+
+            return new DateTime(year, month, day);
         }
 
     }

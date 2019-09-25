@@ -2,6 +2,7 @@
 
 //using System.IO;
 using DVL_Sync_FileEventsLogger.Models;
+using System;
 
 namespace DVL_Sync_FileEventsLogger.Abstractions
 {
@@ -9,8 +10,8 @@ namespace DVL_Sync_FileEventsLogger.Abstractions
     {
         //IFolderEventsLogger CreateFolderEventsLogger(LoggerType loggerType, FolderConfig folderConfig);
         IFolderEventsLogger CreateLoggerInConsole(FolderConfig folderConfig);
-        IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, string lofFilePath);
-        IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, string logFolderPath);
+        IFolderEventsLogger CreateLoggerInTextFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc);
+        IFolderEventsLogger CreateLoggerInJsonFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc);
         IFolderEventsLogger CreateLoggerAsWindows10Notification(FolderConfig folderConfig, string appid);
     }
 }

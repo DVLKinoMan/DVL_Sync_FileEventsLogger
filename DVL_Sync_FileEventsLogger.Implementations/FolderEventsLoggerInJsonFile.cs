@@ -6,22 +6,24 @@ using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
 using System.Extensions;
 using System;
+using System.Diagnostics;
 
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
     public sealed class FolderEventsLoggerInJsonFile : IFolderEventsLogger
     {
         //private readonly StreamWriter streamWriter;
-        private readonly string logFilePath;
+        //private readonly string logFilKePath;
         private readonly FolderConfig folderConfig;
+        private readonly Func<DateTime, string> logFilePathFunc;
 
-        public FolderEventsLoggerInJsonFile(FolderConfig folderConfig, string logFilePath)
+        public FolderEventsLoggerInJsonFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc)
         {
 
             //var fullPath = $"{folderConfig.FolderPath}/{Constants.JsonLogFileName}";
             //this.streamWriter = streamWriter;
             this.folderConfig = folderConfig;
-            this.logFilePath = logFilePath;
+            this.logFilePathFunc = logFilePathFunc;
         }
 
         //public void Dispose() => streamWriter.Dispose();
@@ -32,17 +34,17 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             try
             {
                 if (folderConfig.IsValid(operation, jsonLogFileName: Constants.JsonLogFileName))
-                    using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                    //using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
+                    using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
                         streamWriter.WriteLine(JsonConvert.SerializeObject(operation));
             }
 #if NETFRAMEWORK
             catch (Exception exc)
             {
-                using (EventLog eventLog = new EventLog("Application"))
+                using (var eventLog = new EventLog("Application"))
                 {
                     eventLog.Source = "Application";
                     eventLog.WriteEntry(exc.ToString());
-                    eventLog.WriteEntry("Log message example", EventLogEntryType.Information, 101, 1);
                 }
             }
 #endif
