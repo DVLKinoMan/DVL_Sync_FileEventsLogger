@@ -5,11 +5,18 @@ namespace System.Extensions
 {
     public static class SystemExts
     {
-        public static void SetAttributeToHidden(this FileInfo fileInfo) => fileInfo.Attributes |= FileAttributes.Hidden;
+        public static void SetAttributeToHidden(this string path) => 
+            path.AddFileAttribute(FileAttributes.Hidden);
+
+        public static void AddFileAttribute(this string path, FileAttributes attribute) => 
+            File.SetAttributes(path, File.GetAttributes(path) | attribute);
+
+        public static void RemoveFileAttribute(this string path, FileAttributes attribute) =>
+             File.SetAttributes(path, File.GetAttributes(path) & ~attribute);
 
         public static StreamWriter SetAttributeToHidden(this StreamWriter streamWriter)
         {
-            new FileInfo(streamWriter.FullPath()).SetAttributeToHidden();
+            streamWriter.FullPath().SetAttributeToHidden();
             return streamWriter;
         }
 

@@ -50,6 +50,16 @@ namespace DVL_Sync_FileEventsLogger.Models
             if (this.FilteredFiles != null && this.FilteredFiles.Contains(operation.FilePath))
                 return false;
 
+            //if (File.Exists(operation.FilePath))
+            //{
+            //    var currAtrributes = File.GetAttributes(operation.FilePath);
+            //    if (currAtrributes.HasFlag(FileAttributes.ReadOnly))
+            //    {
+            //        operation.FilePath.RemoveFileAttribute(FileAttributes.ReadOnly);
+            //        return false;
+            //    }
+            //}
+
             return true;
         }
 
