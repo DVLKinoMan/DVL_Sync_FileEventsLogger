@@ -31,12 +31,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             watcher.Renamed += folderEventsHandler.OnRenamed;
         }
 
-        private void SetFolderConfig()
-        {
-            watcher.Path = folderConfig.FolderPath;
-            watcher.NotifyFilter = folderConfig.NotifyFilters;
-            watcher.IncludeSubdirectories = folderConfig.IncludeSubDirectories;
-        }
+        private void SetFolderConfig() => (watcher.Path, watcher.NotifyFilter, watcher.IncludeSubdirectories) = (
+            folderConfig.FolderPath, folderConfig.NotifyFilters, folderConfig.IncludeSubDirectories);
 
         public void Dispose()
         {

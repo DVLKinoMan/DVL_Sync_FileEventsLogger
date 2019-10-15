@@ -2,8 +2,6 @@
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
 
-//using DVL_Sync_FileEventsLogger.Domain.Extensions;
-
 namespace DVL_Sync_FileEventsLogger.Implementations
 {
     public sealed class FolderEventsLoggerInConsole : IFolderEventsLogger
@@ -30,15 +28,5 @@ namespace DVL_Sync_FileEventsLogger.Implementations
                 Console.WriteLine(exc.ToString());
             }
         }
-
-        //{
-        //    switch (operation)
-        //    {
-        //        case DefaultOperationEvent op:
-        //            break;
-        //        case RenameOperationEvent op:
-        //            break;
-        //    }
-        //}
     }
 }

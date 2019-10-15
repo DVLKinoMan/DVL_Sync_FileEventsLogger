@@ -27,7 +27,7 @@ namespace System.Extensions
         }
 
         /// <summary>
-        /// Works if StreamWriter's BaseStream can be casted to FileStream
+        /// Works if StreamWriter's BaseStream can be cast to FileStream
         /// </summary>
         /// <param name="streamWriter"></param>
         /// <returns></returns>
@@ -48,10 +48,7 @@ namespace System.Extensions
         public static string GetDirectoryPath(this string fullPath)
         {
             int len = Path.GetFileName(fullPath).Length;
-            if (len == 0)
-                return fullPath;
-
-            return fullPath.Remove(fullPath.Length - len, len);
+            return len == 0 ? fullPath : fullPath.Remove(fullPath.Length - len, len);
         }
 
         public static string SubtractPath(this string fullPath, string exclusion)
@@ -77,9 +74,7 @@ namespace System.Extensions
             var arr = dateTimeString.Split(' ');
 
             var dateArr = arr[0].Split('-');
-            int month = int.Parse(dateArr[0]);
-            int day = int.Parse(dateArr[1]);
-            int year = int.Parse(dateArr[2]);
+            var (month, day, year) = (int.Parse(dateArr[0]), int.Parse(dateArr[1]), int.Parse(dateArr[2]));
 
             //int hour = int.Parse(arr[1].Replace("h", ""));
             //int min = int.Parse(arr[2].Replace("min", ""));

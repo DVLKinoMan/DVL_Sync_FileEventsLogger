@@ -9,19 +9,11 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         private readonly IFolderEventsLogger logger;
         private readonly IOperationEventFactory operationEventFactory;
 
-        public FolderEventsHandlerViaLogging(IOperationEventFactory operationEventFactory, IFolderEventsLogger logger)
-        {
-            this.operationEventFactory = operationEventFactory;
-            this.logger = logger;
-        }
+        public FolderEventsHandlerViaLogging(IOperationEventFactory operationEventFactory,
+            IFolderEventsLogger logger) =>
+            (this.operationEventFactory, this.logger) = (operationEventFactory, logger);
 
         public void Dispose() => logger.Dispose();
-
-        //public IFolderEventsHandler WithFolderEventsLogger(LoggerTypes logger)
-        //{
-        //    this.logger = logger;
-        //    return this;
-        //}
 
         public void OnChanged(object sender, EventArgs e) =>
             logger.LogOperation(operationEventFactory.GetEditOperationEvent(e));

@@ -53,6 +53,18 @@ namespace DVL_Sync_FileEventsLogger.Models
             RaisedTime = op.RaisedTime
         };
 
+        public OperationEvent WithRaisedTime(DateTime dateTime)
+        {
+            RaisedTime = dateTime;
+            return this;
+        }
+
+        public OperationEvent WithFilePath(string filePath)
+        {
+            FilePath = filePath;
+            return this;
+        }
+
         public override string ToString() =>
             $"EventType: {EventType} FileName: {FileName} FileType: {FileType} RaisedTime: {RaisedTime} FilePath: {FilePath}";
     }

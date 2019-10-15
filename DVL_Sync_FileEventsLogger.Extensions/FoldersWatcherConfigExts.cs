@@ -14,11 +14,9 @@ namespace DVL_Sync_FileEventsLogger.Extensions
     {
         public static FoldersWatcherConfig GetFoldersWatcherConfig(this string path)
         {
-            using (var r = new StreamReader(path))
-            {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<FoldersWatcherConfig>(json);
-            }
+            using var r = new StreamReader(path);
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<FoldersWatcherConfig>(json);
         }
 
         public static IEnumerable<IFolderWatcher> GetFolderWatchers(this FoldersWatcherConfig config)

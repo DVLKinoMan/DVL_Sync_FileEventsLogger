@@ -19,6 +19,12 @@ namespace DVL_Sync_FileEventsLogger.Models
             OldFilePath = op.OldFilePath
         };
 
+        public RenameOperationEvent WithOldFilePath(string oldFilePath)
+        {
+            OldFilePath = oldFilePath;
+            return this;
+        }
+
         public override string ToString() => $"{base.ToString()} OldFileName: {OldFileName} OldFilePath: {OldFilePath}";
     }
 }

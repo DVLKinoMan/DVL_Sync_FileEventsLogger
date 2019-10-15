@@ -41,7 +41,7 @@ namespace DVL_Sync_FileEventsLogger.EventsReaderConsole
                 }
                 else if (events.Contains(fCom))
                 {
-                    OperationEvent opEvent = new CreateOperationEvent();
+                    OperationEvent opEvent;
                     var filePaths = string.Join(' ', command.Skip(1)).Split(",");
                     bool isRenameEvent = false;
                     switch (fCom)
@@ -66,7 +66,7 @@ namespace DVL_Sync_FileEventsLogger.EventsReaderConsole
                         opEvent.FilePath = Path.Combine(currentDirectory, filePaths[0]);
 
                     var folderConfig = new FolderConfig { FolderPath = currentDirectory, WatchHiddenFiles = true };
-                    var loggerTypes = new LoggerType[] { LoggerType.JsonFile };
+                    var loggerTypes = new [] { LoggerType.JsonFile };
                     var logger =
                         new MultipleFolderEventsLogger(loggerTypes.GetFolderEventsLoggers(folderEventsLoggerFactory, folderConfig)
                             .ToArray());

@@ -8,10 +8,6 @@ using System.Windows.Forms;
 
 namespace DVL_Sync_FileEventsLogger.WinForm
 {
-    //public class FilteredFile
-    //{
-    //    public string ColumnName { get; set; }
-    //}
 
     public partial class FolderConfigDialogForm : Form
     {
@@ -22,18 +18,15 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         private void ButtonBrowseFolderPath_Click(object sender, EventArgs e)
         {
             if (this.folderBrowserDialogFolderPath.ShowDialog() == DialogResult.OK)
-            {
                 this.textBoxFolderPath.Text = this.folderBrowserDialogFolderPath.SelectedPath;
-            }
         }
 
         private void ButtonAddFilteredFile_Click(object sender, EventArgs e)
         {
-            if (this.openFileDialogFilteredFiles.ShowDialog() == DialogResult.OK)
-            {
-                var index = this.dataGridViewFilteredFiles.Rows.Add();
-                this.dataGridViewFilteredFiles.Rows[index].Cells["ColumnFilePath"].Value = this.openFileDialogFilteredFiles.FileName;
-            }
+            if (this.openFileDialogFilteredFiles.ShowDialog() != DialogResult.OK) 
+                return;
+            var index = this.dataGridViewFilteredFiles.Rows.Add();
+            this.dataGridViewFilteredFiles.Rows[index].Cells["ColumnFilePath"].Value = this.openFileDialogFilteredFiles.FileName;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -56,13 +49,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             Close();
         }
 
-        private IEnumerable<FilteredFileViewModel> GetFilteredFilesFromGrid()
-        {
-            foreach (DataGridViewRow row in this.dataGridViewFilteredFiles.Rows)
-            {
-                var k = new FilteredFileViewModel {FilePath = row.Cells["ColumnFilePath"].Value.ToString()};
-                yield return k;
-            }
-        }
+        private IEnumerable<FilteredFileViewModel> GetFilteredFilesFromGrid() =>
+            from DataGridViewRow row in this.dataGridViewFilteredFiles.Rows
+            select new FilteredFileViewModel {FilePath = row.Cells["ColumnFilePath"].Value.ToString()};
     }
 }

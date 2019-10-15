@@ -9,14 +9,19 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         public IEnumerable<IFolderWatcher> CreateFoldersWatcher(IEnumerable<IFolderEventsHandler> folderEventsHandlers,
             IEnumerable<FolderConfig> foldersConfigs)
         {
-            var handlerIterator = folderEventsHandlers.GetEnumerator();
-            var configIterator = foldersConfigs.GetEnumerator();
+            using var handleIt = folderEventsHandlers.GetEnumerator();
+            using var configIt = foldersConfigs.GetEnumerator();
 
-            while (handlerIterator.MoveNext() && configIterator.MoveNext())
+            return Impl(handleIt, configIt);
+
+            static IEnumerable<IFolderWatcher> Impl(IEnumerator<IFolderEventsHandler> handlerIterator, IEnumerator<FolderConfig> configIterator)
             {
-                IFolderWatcherFactory
-                    watcherFactory = new FolderWatcherFactoryViaFileSystemWatcher();
-                yield return watcherFactory.CreateFolderWatcher(handlerIterator.Current, configIterator.Current);
+                while (handlerIterator.MoveNext() && configIterator.MoveNext())
+                {
+                    IFolderWatcherFactory
+                        watcherFactory = new FolderWatcherFactoryViaFileSystemWatcher();
+                    yield return watcherFactory.CreateFolderWatcher(handlerIterator.Current, configIterator.Current);
+                }
             }
         }
     }

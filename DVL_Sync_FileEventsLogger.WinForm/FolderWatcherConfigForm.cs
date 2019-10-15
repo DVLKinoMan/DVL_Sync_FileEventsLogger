@@ -17,15 +17,20 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         private bool exitClicked = false;
         private FoldersWatcherConfig folderWatchersConfig;
         private HashSet<LoggerType> loggerTypesHashSet;
-        private readonly string configName = "config.json";
+        private const string configName = "config.json";
 
         private List<FolderConfig> folderConfigs;
-        private readonly string applicationName = "DVL_Sync_FileEventsLogger";
+        private const string applicationName = "DVL_Sync_FileEventsLogger";
 
         public FolderWatcherConfigurationForm()
         {
             InitializeComponent();
 
+            StartForm();
+        }
+
+        public void StartForm()
+        {
             this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
             this.customNotifyIcon.Visible = true;
@@ -34,7 +39,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             //this.Hide();
             try
             {
-                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{configName}");
                 SetWatchers();
             }
             catch (Exception exc)
@@ -47,19 +52,23 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         private void WinForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!this.exitClicked)
-            {
-                e.Cancel = true;
-                HideForm();
-            }
+            if (this.exitClicked) 
+                return;
+            e.Cancel = true;
+            HideForm();
         }
 
         private void CustomNotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-                this.customNotifyIcon.ContextMenuStrip.Show();
-            else if (e.Button == MouseButtons.Left)
-                OpenForm();
+            switch (e.Button)
+            {
+                case MouseButtons.Right:
+                    this.customNotifyIcon.ContextMenuStrip.Show();
+                    break;
+                case MouseButtons.Left:
+                    OpenForm();
+                    break;
+            }
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,7 +132,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             try
             {
-                if (!ValideFolderWatcherConfig())
+                if (!ValidateFolderWatcherConfig())
                     return;
 
                 this.folderWatchersConfig.IFolderWatcher = this.textBoxIFolderWatcher.Text;
@@ -131,21 +140,18 @@ namespace DVL_Sync_FileEventsLogger.WinForm
                 this.folderWatchersConfig.FoldersConfigsPath = this.textBoxFoldersConfigsPath.Text;
                 this.folderWatchersConfig.IFolderEventsHandler = this.textBoxIFolderEventsHandler.Text;
                 this.folderWatchersConfig.IOperationEventFactory = this.textBoxIOperationEventFactory.Text;
-                if (this.checkBoxWindows10Notification.Checked)
-                    this.folderWatchersConfig.AppID = this.textBoxAppID.Text;
-                else this.folderWatchersConfig.AppID = null;
+                this.folderWatchersConfig.AppID = this.checkBoxWindows10Notification.Checked ? this.textBoxAppID.Text : null;
 
                 //Saving Part
                 SaveFolderConfigsIfRequired();
-                SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
+                SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{configName}");
 
                 ////Set Watchers
                 //SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
                 //SetWatchers();
 
                 //Close();
-                Application.Restart();
-                Environment.Exit(0);
+                RestartForm();
             }
             catch(Exception exc)
             {
@@ -170,11 +176,10 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             foreach (DataGridViewRow item in this.dataGridViewFolderConfigs.SelectedRows)
             {
                 int index = item.Index;
-                if (index >= 0)
-                {
-                    this.dataGridViewFolderConfigs.Rows.RemoveAt(index);
-                    this.folderConfigs.RemoveAt(index);
-                }
+                if (index < 0) 
+                    continue;
+                this.dataGridViewFolderConfigs.Rows.RemoveAt(index);
+                this.folderConfigs.RemoveAt(index);
             }
         }
 
@@ -198,6 +203,12 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
         #region UI Methods
 
+        private void RestartForm()
+        {
+            HideForm();
+            StartForm();
+        }
+
         private void HideForm()
         {
             this.ShowInTaskbar = false;
@@ -210,7 +221,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         {
             try
             {
-                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{this.configName}");
+                SetFolderWatcherConfig($"{Environment.CurrentDirectory}/{configName}");
 
                 this.folderConfigs = this.folderWatchersConfig.FoldersConfigsPath.GetFolderConfigs().ToList();
                 foreach (var folderConfig in this.folderConfigs)
@@ -270,24 +281,13 @@ namespace DVL_Sync_FileEventsLogger.WinForm
 
             //ResetLoggerTypeCheckboxes();
 
-            if (this.loggerTypesHashSet.Contains(LoggerType.TextFile))
-                this.checkBoxTextFile.Checked = true;
-            else this.checkBoxTextFile.Checked = false;
+            this.checkBoxTextFile.Checked = this.loggerTypesHashSet.Contains(LoggerType.TextFile);
 
+            this.checkBoxJsonFile.Checked = this.loggerTypesHashSet.Contains(LoggerType.JsonFile);
 
-            if (this.loggerTypesHashSet.Contains(LoggerType.JsonFile))
-                this.checkBoxJsonFile.Checked = true;
-            else this.checkBoxJsonFile.Checked = false;
+            this.checkBoxConsole.Checked = this.loggerTypesHashSet.Contains(LoggerType.Console);
 
-
-            if (this.loggerTypesHashSet.Contains(LoggerType.Console))
-                this.checkBoxConsole.Checked = true;
-            else this.checkBoxConsole.Checked = false;
-
-
-            if (this.loggerTypesHashSet.Contains(LoggerType.Windows10Notification))
-                this.checkBoxWindows10Notification.Checked = true;
-            else this.checkBoxWindows10Notification.Checked = false;
+            this.checkBoxWindows10Notification.Checked = this.loggerTypesHashSet.Contains(LoggerType.Windows10Notification);
         }
 
         private void AddFolderConfigToForm(FolderConfig folderConfig)
@@ -321,10 +321,8 @@ namespace DVL_Sync_FileEventsLogger.WinForm
         private void SaveFolderWatcherConfigFile(string path)
         {
             string jsonString = JsonConvert.SerializeObject(this.folderWatchersConfig);
-            using (var stream = new StreamWriter(path, false))
-            {
-                stream.Write(jsonString);
-            }
+            using var stream = new StreamWriter(path, false);
+            stream.Write(jsonString);
         }
 
         private void SaveFoldersConfigsFile(string path)
@@ -332,20 +330,17 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             this.folderWatchersConfig.FoldersConfigsPath = path;
 
             string jsonString = JsonConvert.SerializeObject(this.folderConfigs);
-            using (var stream = new StreamWriter(path, false))
-            {
-                stream.Write(jsonString);
-            }
+            using var stream = new StreamWriter(path, false);
+            stream.Write(jsonString);
         }
 
         private void SetWatchers()
         {
-            if (this.watchers != null)
-                this.watchers.Dispose();
+            this.watchers?.Dispose();
             if (this.folderWatchersConfig == null)
                 return;
-            if (this.watchers != null)
-                this.watchers = null;
+            //if (this.watchers != null)
+            //    this.watchers = null;
             this.watchers = this.folderWatchersConfig.GetFolderWatchers();
             this.watchers.StartWatching();
         }
@@ -365,7 +360,7 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             //SaveFolderWatcherConfigFile($"{Environment.CurrentDirectory}/{this.configName}");
         }
 
-        private bool ValideFolderWatcherConfig() => this.checkBoxAddManuallyConfigs.Checked || 
+        private bool ValidateFolderWatcherConfig() => this.checkBoxAddManuallyConfigs.Checked || 
             !string.IsNullOrEmpty(this.textBoxFoldersConfigsPath.Text);
 
         private void SaveFolderConfigsIfRequired()
@@ -373,16 +368,16 @@ namespace DVL_Sync_FileEventsLogger.WinForm
             if (!this.checkBoxAddManuallyConfigs.Checked)
                 return;
 
-            SaveFoldersConfigsFile($"{DriveInfo.GetDrives()[0].Name}\\{this.applicationName}\\FoldersConfigs.json");
+            SaveFoldersConfigsFile($"{DriveInfo.GetDrives()[0].Name}\\{applicationName}\\FoldersConfigs.json");
         }
 
-        private void LogInEventsViewer(Exception exc)
+        private static void LogInEventsViewer(Exception exc)
         {
-            using (var eventLog = new EventLog("Application"))
+            using var eventLog = new EventLog("Application")
             {
-                eventLog.Source = "Application";
-                eventLog.WriteEntry(exc.ToString());
-            }
+                Source = "Application"
+            };
+            eventLog.WriteEntry(exc.ToString());
         }
 
         #endregion

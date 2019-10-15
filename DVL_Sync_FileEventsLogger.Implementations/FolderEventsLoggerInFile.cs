@@ -1,8 +1,6 @@
-﻿//using DVL_Sync_FileEventsLogger.Domain.Extensions;
-using System;
+﻿using System;
 using System.Extensions;
 using System.IO;
-//using System.Extensions;
 using DVL_Sync_FileEventsLogger.Abstractions;
 using DVL_Sync_FileEventsLogger.Models;
 using System.Diagnostics;
@@ -11,19 +9,11 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 {
     public sealed class FolderEventsLoggerInFile : IFolderEventsLogger
     {
-        //private readonly StreamWriter streamWriter;
-        //private readonly string logFilePath;
         private readonly FolderConfig folderConfig;
         private readonly Func<DateTime, string> logFilePathFunc;
 
-        public FolderEventsLoggerInFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc)
-        {
-            //var fullPath = $"{folderConfig.FolderPath}/{Constants.TextLogFileName}";
-            //this.streamWriter = streamWriter;
-            //this.logFilePath = logFilePath;
-            this.logFilePathFunc = logFilePathFunc;
-            this.folderConfig = folderConfig;
-        }
+        public FolderEventsLoggerInFile(FolderConfig folderConfig, Func<DateTime, string> logFilePathFunc) => 
+            (this.logFilePathFunc, this.folderConfig) = (logFilePathFunc,folderConfig);
 
         public void Dispose() { }
 
@@ -34,8 +24,8 @@ namespace DVL_Sync_FileEventsLogger.Implementations
                 if (!folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName)) 
                     return;
 
-                using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
-                    streamWriter.WriteLine(operation);
+                using var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden();
+                streamWriter.WriteLine(operation);
             }
 #if NETFRAMEWORK
             catch (Exception exc)

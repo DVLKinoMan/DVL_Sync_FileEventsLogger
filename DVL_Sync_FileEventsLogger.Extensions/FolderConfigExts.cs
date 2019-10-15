@@ -14,13 +14,12 @@ namespace DVL_Sync_FileEventsLogger.Extensions
 
         public static FolderConfig GetFolderConfig(this string path)
         {
-            using (var r = new StreamReader(path))
-            {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<FolderConfig>(json);
-            }
+            using var r = new StreamReader(path);
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<FolderConfig>(json);
         }
 
+#nullable enable
         public static IEnumerable<FolderConfig> GetFolderConfigs(this string path)
         {
             if (!File.Exists(path))
@@ -35,12 +34,11 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                 File.Create(path).Dispose();
             }
 
-            using (var r = new StreamReader(path))
-            {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<IEnumerable<FolderConfig>>(json);
-            }
+            using var r = new StreamReader(path);
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<IEnumerable<FolderConfig>>(json);
         }
+#nullable disable
 
         //public static bool IsValid(this FolderConfig folderConfig, OperationEvent operation)
         //{
