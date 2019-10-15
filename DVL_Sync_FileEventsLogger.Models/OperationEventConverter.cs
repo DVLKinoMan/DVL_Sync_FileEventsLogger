@@ -18,45 +18,41 @@ namespace DVL_Sync_FileEventsLogger.Models
 
     public class OperationEventConverter : JsonConverter
     {
-        static JsonSerializerSettings SpecifiedSubclassConversion = new JsonSerializerSettings() { ContractResolver = new BaseSpecifiedConcreteClassConverter() };
+        static readonly JsonSerializerSettings SpecifiedSubclassConversion = new JsonSerializerSettings()
+            {ContractResolver = new BaseSpecifiedConcreteClassConverter()};
 
         public override bool CanConvert(Type objectType) => objectType == typeof(OperationEvent);
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            var jo = JObject.Load(reader);
-            switch (jo["EventType"].Value<int>())
-            {
-                case 0:
-                    return JsonConvert.DeserializeObject<CreateOperationEvent>(jo.ToString(), SpecifiedSubclassConversion);
-                case 1:
-                    return JsonConvert.DeserializeObject<EditOperationEvent>(jo.ToString(), SpecifiedSubclassConversion);
-                case 2:
-                    return JsonConvert.DeserializeObject<DeleteOperationEvent>(jo.ToString(), SpecifiedSubclassConversion);
-                case 3:
-                    return JsonConvert.DeserializeObject<RenameOperationEvent>(jo.ToString(), SpecifiedSubclassConversion);
-                default:
-                    throw new Exception();
-            }
-            throw new NotImplementedException();
-        }
 
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer) => GetFromJObject(JObject.Load(reader));
+
+        private static object GetFromJObject(JObject jo) => jo["EventType"].Value<int>() switch
+        {
+            0 => (object)JsonConvert.DeserializeObject<CreateOperationEvent>(jo.ToString(),
+                SpecifiedSubclassConversion),
+            1 => JsonConvert.DeserializeObject<EditOperationEvent>(jo.ToString(), SpecifiedSubclassConversion),
+            2 => JsonConvert.DeserializeObject<DeleteOperationEvent>(jo.ToString(), SpecifiedSubclassConversion),
+            3 => JsonConvert.DeserializeObject<RenameOperationEvent>(jo.ToString(), SpecifiedSubclassConversion),
+            _ => throw new NotImplementedException()
+        };
         //public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            if (value is RenameOperationEvent renameOp)
+            switch (value)
             {
-                string serialized = JsonConvert.SerializeObject((FakeRenameOperationEvent)renameOp);
-                writer.WriteRaw(serialized);
+                case RenameOperationEvent renameOp:
+                    writer.WriteRaw(
+                        JsonConvert.SerializeObject((FakeRenameOperationEvent) renameOp));
+                    break;
+                case OperationEvent op:
+                    writer.WriteRaw(JsonConvert.SerializeObject((FakeOperationEvent) op));
+                    break;
+                default: throw new Exception();
             }
-            else if (value is OperationEvent op)
-            {
-                string serialized = JsonConvert.SerializeObject((FakeOperationEvent)op);
-                writer.WriteRaw(serialized);
-            }
-            //serializer.Serialize(writer, value, typeof(OperationEvent));
         }
     }
+
 
     public class FakeOperationEvent
     {

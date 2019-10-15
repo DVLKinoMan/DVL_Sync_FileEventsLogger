@@ -17,7 +17,7 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         }
 
-        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
+        public void LogOperation<TOperation>(TOperation operation) where TOperation : OperationEvent
         {
             try
             {

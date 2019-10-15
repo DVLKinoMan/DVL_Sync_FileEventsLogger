@@ -37,7 +37,8 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                             switch (config.IOperationEventFactory)
                             {
                                 case "Default":
-                                    IOperationEventFactory operationEventFactory = new FileSystemOperationEventFactory();
+                                    IOperationEventFactory operationEventFactory =
+                                        new FileSystemOperationEventFactory();
 
                                     if (config.LoggerTypes == null || config.LoggerTypes.Length == 0)
                                         throw new ArgumentException("config.LoggerTypes");
@@ -91,6 +92,7 @@ namespace DVL_Sync_FileEventsLogger.Extensions
             }
         }
 
+#nullable enable
         public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, FolderConfig folderConfig)
         {
@@ -105,12 +107,12 @@ namespace DVL_Sync_FileEventsLogger.Extensions
                         yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
                         break;
                     case LoggerType.TextFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig, 
+                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
                             dt => $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.TextLogFileName}");
                         break;
                     case LoggerType.JsonFile:
                         yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
-                                    dt => $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.JsonLogFileName}");
+                            dt => $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.JsonLogFileName}");
                         break;
                     case LoggerType.Windows10Notification:
                         yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,
@@ -124,6 +126,6 @@ namespace DVL_Sync_FileEventsLogger.Extensions
 
             //yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
         }
-
+#nullable disable
     }
 }

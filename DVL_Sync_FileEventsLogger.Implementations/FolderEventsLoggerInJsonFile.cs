@@ -29,14 +29,15 @@ namespace DVL_Sync_FileEventsLogger.Implementations
         //public void Dispose() => streamWriter.Dispose();
         public void Dispose() { }
 
-        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
+        public void LogOperation<TOperation>(TOperation operation) where TOperation : OperationEvent
         {
             try
             {
-                if (folderConfig.IsValid(operation, jsonLogFileName: Constants.JsonLogFileName))
-                    //using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
-                    using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
-                        streamWriter.WriteLine(JsonConvert.SerializeObject(operation));
+                if (!folderConfig.IsValid(operation, jsonLogFileName: Constants.JsonLogFileName)) 
+                    return;
+
+                using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
+                    streamWriter.WriteLine(JsonConvert.SerializeObject(operation));
             }
 #if NETFRAMEWORK
             catch (Exception exc)

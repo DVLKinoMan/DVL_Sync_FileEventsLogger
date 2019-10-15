@@ -5,6 +5,7 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 {
     internal sealed class FolderWatcherFactoryViaFileSystemWatcher : IFolderWatcherFactory
     {
-        public IFolderWatcher CreateFolderWatcher(IFolderEventsHandler folderEventsHandler, FolderConfig folderConfig) => new CustomFileSystemWatcher(folderEventsHandler, folderConfig);
+        public IFolderWatcher CreateFolderWatcher(IFolderEventsHandler folderEventsHandler, FolderConfig folderConfig) => 
+            new CustomFileSystemWatcher(folderEventsHandler, folderConfig);
     }
 }

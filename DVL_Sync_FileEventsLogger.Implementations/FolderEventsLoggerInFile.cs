@@ -27,14 +27,15 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
         public void Dispose() { }
 
-        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
+        public void LogOperation<TOperation>(TOperation operation) where TOperation : OperationEvent
         {
             try
             {
-                if (folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName))
-                    //using (var streamWriter = new StreamWriter(logFilePath, true).SetAttributeToHidden())
-                    using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
-                        streamWriter.WriteLine(operation);
+                if (!folderConfig.IsValid(operation, textLogFileName: Constants.TextLogFileName)) 
+                    return;
+
+                using (var streamWriter = new StreamWriter(logFilePathFunc(DateTime.Now), true).SetAttributeToHidden())
+                    streamWriter.WriteLine(operation);
             }
 #if NETFRAMEWORK
             catch (Exception exc)

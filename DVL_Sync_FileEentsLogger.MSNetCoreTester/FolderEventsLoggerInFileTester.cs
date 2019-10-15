@@ -6,7 +6,7 @@ using System.Extensions;
 using System.IO;
 using System.Text;
 
-namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
+namespace DVL_Sync_FileEventsLogger.MSNetCoreTester
 {
     [TestClass]
     public class FolderEventsLoggerInFileTester

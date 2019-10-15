@@ -39,8 +39,8 @@ namespace System.Extensions
         {
             string result = dateTime.ToString(format);
 
-            foreach (var replacedValue in withReplacedValues)
-                result = result.Replace(replacedValue.Item1, replacedValue.Item2);
+            foreach (var (item1, item2) in withReplacedValues)
+                result = result.Replace(item1, item2);
 
             return result;
         }
@@ -54,17 +54,17 @@ namespace System.Extensions
             return fullPath.Remove(fullPath.Length - len, len);
         }
 
-        public static string SubtractPath(this string fullPath, string Exclusion)
+        public static string SubtractPath(this string fullPath, string exclusion)
         {
-            if (Exclusion == null)
+            if (exclusion == null)
                 return fullPath;
-            Exclusion = Exclusion.ToLower();
+            exclusion = exclusion.ToLower();
             string oldFullPath = fullPath;
             fullPath = fullPath.ToLower();
-            if (fullPath.IndexOf(Exclusion) != 0)
+            if (fullPath.IndexOf(exclusion) != 0)
                 return fullPath;
 
-            string res = oldFullPath.Remove(0, Exclusion.Length);
+            string res = oldFullPath.Remove(0, exclusion.Length);
 
             return string.Concat(res.SkipWhile(ch => ch == '\\'));
         }

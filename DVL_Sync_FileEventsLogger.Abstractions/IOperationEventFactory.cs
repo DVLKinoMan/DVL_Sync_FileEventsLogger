@@ -9,20 +9,20 @@ namespace DVL_Sync_FileEventsLogger.Abstractions
         //    //where Operation : OperationEvent
         //    where EventArgs : SystemEventArgs;
 
-        CreateOperationEvent GetCreateOperationEvent<EventArgs>(EventArgs args)
+        CreateOperationEvent GetCreateOperationEvent<TEventArgs>(TEventArgs args)
             //where Operation : OperationEvent
-            where EventArgs : SystemEventArgs;
+            where TEventArgs : SystemEventArgs;
 
-        EditOperationEvent GetEditOperationEvent<EventArgs>(EventArgs args)
+        EditOperationEvent GetEditOperationEvent<TEventArgs>(TEventArgs args)
             //where Operation : OperationEvent
-            where EventArgs : SystemEventArgs;
+            where TEventArgs : SystemEventArgs;
 
-        DeleteOperationEvent GetDeleteOperationEvent<EventArgs>(EventArgs args)
+        DeleteOperationEvent GetDeleteOperationEvent<TEventArgs>(TEventArgs args)
             //where Operation : OperationEvent
-            where EventArgs : SystemEventArgs;
+            where TEventArgs : SystemEventArgs;
 
-        RenameOperationEvent GetRenameOperationEvent<EventArgs>(EventArgs args)
+        RenameOperationEvent GetRenameOperationEvent<TEventArgs>(TEventArgs args)
             //where Operation : OperationEvent
-            where EventArgs : SystemEventArgs;
+            where TEventArgs : SystemEventArgs;
     }
 }

@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>DVL_Sync_FileEventsLogger.WinFormCore</AssemblyName>
+    <RootNamespace>DVL_Sync_FileEventsLogger.WinForm</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderConfigDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderConfigDialogForm.Designer.cs">
+      <DependentUpon>FolderConfigDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderWatcherConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderWatcherConfigForm.Designer.cs">
+      <DependentUpon>FolderWatcherConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\Models\FilteredFileViewModel.cs" />
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\Program.cs" />
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderConfigDialogForm.resx">
+      <DependentUpon>FolderConfigDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\DVL_Sync_FileEventsLogger.WinForm\FolderWatcherConfigForm.resx">
+      <DependentUpon>FolderWatcherConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="..\DVL_Sync_FileEventsLogger.WinForm\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\DVL_Sync_FileEventsLogger.WinForm\packages.config" />
+    <None Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\DataSources\DVL_Sync_FileEventsLogger.WinForm.Models.FilteredFileViewModel.datasource" />
+    <None Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="..\DVL_Sync_FileEventsLogger.WinForm\Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\DVL_Sync_FileEventsLogger.WinForm\exit-512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Abstractions\DVL_Sync_FileEventsLogger.Abstractions.csproj">
+      <Project>{2E061CF5-9934-4F73-86E6-44575396A56D}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Extensions\DVL_Sync_FileEventsLogger.Extensions.csproj">
+      <Project>{3fc82acd-d3b8-440d-bd2a-f2172b9ddd0b}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DVL_Sync_FileEventsLogger.Models\DVL_Sync_FileEventsLogger.Models.csproj">
+      <Project>{90dae338-aa89-41ee-aa52-df37ee93403d}</Project>
+      <Name>DVL_Sync_FileEventsLogger.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -8,17 +8,17 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 {
     public sealed class FileSystemOperationEventFactory : IOperationEventFactory
     {
-        public CreateOperationEvent GetCreateOperationEvent<EventArgs>(EventArgs args) where EventArgs : SystemEventArgs => SetOperationEvent(args, new CreateOperationEvent());
+        public CreateOperationEvent GetCreateOperationEvent<TEventArgs>(TEventArgs args) where TEventArgs : SystemEventArgs => SetOperationEvent(args, new CreateOperationEvent());
 
-        public EditOperationEvent GetEditOperationEvent<EventArgs>(EventArgs args) where EventArgs : SystemEventArgs => SetOperationEvent(args, new EditOperationEvent());
+        public EditOperationEvent GetEditOperationEvent<TEventArgs>(TEventArgs args) where TEventArgs : SystemEventArgs => SetOperationEvent(args, new EditOperationEvent());
 
-        public DeleteOperationEvent GetDeleteOperationEvent<EventArgs>(EventArgs args) where EventArgs : SystemEventArgs => SetOperationEvent(args, new DeleteOperationEvent());
+        public DeleteOperationEvent GetDeleteOperationEvent<TEventArgs>(TEventArgs args) where TEventArgs : SystemEventArgs => SetOperationEvent(args, new DeleteOperationEvent());
 
-        public RenameOperationEvent GetRenameOperationEvent<EventArgs>(EventArgs args)
-            where EventArgs : SystemEventArgs => SetOperationEvent(args,
+        public RenameOperationEvent GetRenameOperationEvent<TEventArgs>(TEventArgs args)
+            where TEventArgs : SystemEventArgs => SetOperationEvent(args,
             SetOldFilePathToRenameOperationEvent(args, new RenameOperationEvent()));
 
-        private Event SetOperationEvent<Event>(SystemEventArgs args, Event op) where Event : OperationEvent
+        private static TEvent SetOperationEvent<TEvent>(SystemEventArgs args, TEvent op) where TEvent : OperationEvent
         {
             switch (args)
             {
@@ -32,7 +32,7 @@ namespace DVL_Sync_FileEventsLogger.Implementations
             }
         }
 
-        private RenameOperationEvent SetOldFilePathToRenameOperationEvent(SystemEventArgs args, RenameOperationEvent op)
+        private static RenameOperationEvent SetOldFilePathToRenameOperationEvent(SystemEventArgs args, RenameOperationEvent op)
         {
             if (args is RenamedEventArgs renamedEventArgs)
                 op.OldFilePath = renamedEventArgs.OldFullPath;

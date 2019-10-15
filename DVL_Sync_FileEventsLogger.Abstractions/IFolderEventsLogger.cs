@@ -5,6 +5,6 @@ namespace DVL_Sync_FileEventsLogger.Abstractions
 {
     public interface IFolderEventsLogger : IDisposable
     {
-        void LogOperation<Operation>(Operation operation) where Operation : OperationEvent;
+        void LogOperation<TOperation>(TOperation operation) where TOperation : OperationEvent;
     }
 }

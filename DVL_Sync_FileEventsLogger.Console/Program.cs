@@ -4,11 +4,11 @@ using System.Threading;
 
 namespace DVL_Sync_FileEventsLogger.Console
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
-            string configName = "config.json";
+            const string configName = "config.json";
 
             var watcher =
                 $"{System.Environment.CurrentDirectory}/{configName}".GetFoldersWatcherConfig().GetFolderWatchers();

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Extensions;
 using System.IO;
 
-namespace DVL_Sync_FileEentsLogger.MSNetCoreTester
+namespace DVL_Sync_FileEventsLogger.MSNetCoreTester
 {
     [TestClass]
     public class FolderConfigTester

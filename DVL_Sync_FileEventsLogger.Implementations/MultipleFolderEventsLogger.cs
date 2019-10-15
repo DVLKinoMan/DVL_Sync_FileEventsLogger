@@ -15,7 +15,7 @@ namespace DVL_Sync_FileEventsLogger.Implementations
                 logger.Dispose();
         }
 
-        public void LogOperation<Operation>(Operation operation) where Operation : OperationEvent
+        public void LogOperation<TOperation>(TOperation operation) where TOperation : OperationEvent
         {
             foreach (var logger in loggers)
                 logger.LogOperation(operation);

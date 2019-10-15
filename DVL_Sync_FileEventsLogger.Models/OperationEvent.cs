@@ -28,10 +28,7 @@ namespace DVL_Sync_FileEventsLogger.Models
         public FileType FileType { get; set; }
 
         public DateTime RaisedTime { get; set; }
-        public string FilePath { get
-            {
-                return _filePath;
-            }
+        public string FilePath { get => _filePath;
             set
             {
                 _filePath = value;//.ToLower();
@@ -40,13 +37,13 @@ namespace DVL_Sync_FileEventsLogger.Models
         }
         private string _filePath;
 
-        private FileType DetermineFileType(string filePath)
-        {
-            string filename = Path.GetFileName(filePath);
-            if (filename.Length >= 4 && filename[filename.Length - 4] == '.')
-                return FileType.File;
-            else return FileType.Directory;
-        }
+        private static FileType DetermineFileType(string filePath) =>
+            Path.GetFileName(filePath) switch
+            {
+                { } flName when flName.Length >= 4 && flName[^4] == '.' => FileType.File,
+                { } flName => FileType.Directory,
+                _ => throw new NotImplementedException("filePath does not contain filename")
+            };
 
         public static explicit operator FakeOperationEvent(OperationEvent op) => new FakeOperationEvent
         {
@@ -67,16 +64,19 @@ namespace DVL_Sync_FileEventsLogger.Models
 
     public sealed class CreateOperationEvent : OperationEvent
     {
-        public override EventType EventType { get { return EventType.Create; } set { } }
+        public override EventType EventType { get => EventType.Create;
+            set { } }
     }
 
     public sealed class EditOperationEvent : OperationEvent
     {
-        public override EventType EventType { get { return EventType.Edit; } set { } }
+        public override EventType EventType { get => EventType.Edit;
+            set { } }
     }
 
     public sealed class DeleteOperationEvent : OperationEvent
     {
-        public override EventType EventType { get { return EventType.Delete; } set { } }
+        public override EventType EventType { get => EventType.Delete;
+            set { } }
     }
 }
