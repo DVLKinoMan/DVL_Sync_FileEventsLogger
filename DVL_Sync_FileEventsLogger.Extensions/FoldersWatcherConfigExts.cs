@@ -67,17 +67,15 @@ namespace DVL_Sync_FileEventsLogger.Extensions
             //Windows10NotificationsHelper.TryCreateShortcut(appid);
         }
 
-        //private static IEnumerable<IFolderWatcher> GetFolderWatchersImpl(FoldersWatcherConfig config)
-        //{
-
-        //}
-
         private static IEnumerable<IFolderEventsHandler> GetFolderEventsHandlers(
             this IEnumerable<FolderConfig> foldersConfigs, LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, IOperationEventFactory operationEventFactory)
         {
             foreach (var folderConfig in foldersConfigs)
             {
+                if(folderConfig is null)
+                    continue;
+                
                 IFolderEventsLogger logger =
                     new MultipleFolderEventsLogger(loggerTypes
                         .GetFolderEventsLoggers(folderEventsLoggerFactory, folderConfig)
@@ -94,36 +92,43 @@ namespace DVL_Sync_FileEventsLogger.Extensions
         public static IEnumerable<IFolderEventsLogger> GetFolderEventsLoggers(this LoggerType[] loggerTypes,
             IFolderEventsLoggerFactory folderEventsLoggerFactory, FolderConfig folderConfig)
         {
-            foreach (var loggerType in loggerTypes)
-            {
-                if (folderConfig != null && !Directory.Exists(folderConfig.FolderPath))
-                    throw new DirectoryNotFoundException($"Directory on Path {folderConfig.FolderPath} Not Found");
+            if (!Directory.Exists(folderConfig.FolderPath))
+                throw new DirectoryNotFoundException($"Directory on Path {folderConfig.FolderPath} Not Found");
 
-                switch (loggerType)
+            return Impl();
+
+            IEnumerable<IFolderEventsLogger> Impl()
+            {
+                foreach (var loggerType in loggerTypes)
                 {
-                    case LoggerType.Console:
-                        yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
-                        break;
-                    case LoggerType.TextFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
-                            dt => $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.TextLogFileName}");
-                        break;
-                    case LoggerType.JsonFile:
-                        yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
-                            dt => $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.JsonLogFileName}");
-                        break;
-                    case LoggerType.Windows10Notification:
-                        yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,
-                            Constants
-                                .ApplicationIDForWindows10);
-                        break;
-                    default:
-                        throw new ArgumentException("loggerType");
+                    switch (loggerType)
+                    {
+                        case LoggerType.Console:
+                            yield return folderEventsLoggerFactory.CreateLoggerInConsole(folderConfig);
+                            break;
+                        case LoggerType.TextFile:
+                            yield return folderEventsLoggerFactory.CreateLoggerInTextFile(folderConfig,
+                                dt =>
+                                    $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.TextLogFileName}");
+                            break;
+                        case LoggerType.JsonFile:
+                            yield return folderEventsLoggerFactory.CreateLoggerInJsonFile(folderConfig,
+                                dt =>
+                                    $"{folderConfig.FolderPath}/{dt.GetCustomString()} - {Constants.JsonLogFileName}");
+                            break;
+                        case LoggerType.Windows10Notification:
+                            yield return folderEventsLoggerFactory.CreateLoggerAsWindows10Notification(folderConfig,
+                                Constants
+                                    .ApplicationIDForWindows10);
+                            break;
+                        default:
+                            throw new ArgumentException("loggerType");
+                    }
                 }
             }
 
             //yield return folderEventsLoggerFactory.CreateFolderEventsLogger(loggerString, folderConfig);
         }
-#nullable disable
+#nullable restore
     }
 }
