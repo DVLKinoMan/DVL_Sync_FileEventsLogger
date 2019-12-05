@@ -14,14 +14,13 @@ namespace DVL_Sync_FileEventsLogger.Implementations
 
             return Impl(handleIt, configIt);
 
-            static IEnumerable<IFolderWatcher> Impl(IEnumerator<IFolderEventsHandler> handlerIterator, IEnumerator<FolderConfig> configIterator)
+            static IEnumerable<IFolderWatcher> Impl(IEnumerator<IFolderEventsHandler> handlerIterator,
+                IEnumerator<FolderConfig> configIterator)
             {
+                IFolderWatcherFactory
+                    watcherFactory = new FolderWatcherFactoryViaFileSystemWatcher();
                 while (handlerIterator.MoveNext() && configIterator.MoveNext())
-                {
-                    IFolderWatcherFactory
-                        watcherFactory = new FolderWatcherFactoryViaFileSystemWatcher();
                     yield return watcherFactory.CreateFolderWatcher(handlerIterator.Current, configIterator.Current);
-                }
             }
         }
     }
